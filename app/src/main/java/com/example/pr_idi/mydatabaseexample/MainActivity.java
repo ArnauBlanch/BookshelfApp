@@ -17,7 +17,7 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        bookData = new BookData(this);
+        bookData = BookData.getInstance(this);
         bookData.open();
 
         List<Book> values = bookData.getAllBooks();

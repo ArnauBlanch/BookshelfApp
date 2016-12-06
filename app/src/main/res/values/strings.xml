@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MyDatabaseExample</string>
+    <string name="app_name">Book Database Test</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_books">There are no books</string>
 </resources>

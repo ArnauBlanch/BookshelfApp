@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="#ffffff" >
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Development of an app focusing on UX"
+        android:textAppearance="@android:style/TextAppearance.Material.SearchResult.Title"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Arnau Blanch Cortès"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+        android:layout_below="@+id/book_title"
+        android:paddingLeft="16dp"
+        android:paddingTop="4dp" />
+
+    <TextView
+        android:id="@+id/book_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(1996)"
+        android:layout_toRightOf="@+id/book_title"
+        android:paddingTop="17dp"
+        android:paddingLeft="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#aaaaaa"
+        android:paddingTop="72dp"/>
+
+
+</RelativeLayout>

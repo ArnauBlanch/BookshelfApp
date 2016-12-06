@@ -1,9 +1,5 @@
 package com.example.pr_idi.mydatabaseexample;
 
-/**
- * BookData
- * Created by pr_idi on 10/11/16.
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,13 +94,13 @@ public class BookData {
     }
 
     // Crea nou llibre amb totes les seves dades
-    public Book createBook(String title, String author, String publisher, Integer year, String category, String persEval) {
+    public Book createBook(String title, String author, Integer year, String publisher, String category, String persEval) {
         ContentValues values = new ContentValues();
 
         values.put(MySQLiteHelper.COLUMN_TITLE, title);
         values.put(MySQLiteHelper.COLUMN_AUTHOR, author);
-        values.put(MySQLiteHelper.COLUMN_PUBLISHER, publisher);
         values.put(MySQLiteHelper.COLUMN_YEAR, year);
+        values.put(MySQLiteHelper.COLUMN_PUBLISHER, publisher);
         values.put(MySQLiteHelper.COLUMN_CATEGORY, category);
         values.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, persEval);
 

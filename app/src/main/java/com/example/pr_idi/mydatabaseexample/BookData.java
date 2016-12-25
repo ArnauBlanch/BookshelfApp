@@ -42,9 +42,9 @@ public class BookData {
     }
 
     public static BookData getInstance(Context context) {
-        if (instance == null) {
+        if (instance == null)
             instance = new BookData(context);
-        }
+
         return instance;
     }
 
@@ -120,8 +120,7 @@ public class BookData {
 
     public void deleteBook(Book book) {
         long id = book.getId();
-        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID
-                + " = " + id, null);
+        deleteBookById(id);
     }
 
     public List<Book> getAllBooks() {
@@ -151,5 +150,9 @@ public class BookData {
         book.setCategory(cursor.getString(5));
         book.setPersonal_evaluation(cursor.getString(6));
         return book;
+    }
+
+    public void deleteBookById(long id) {
+        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID + " = " + id, null);
     }
 }

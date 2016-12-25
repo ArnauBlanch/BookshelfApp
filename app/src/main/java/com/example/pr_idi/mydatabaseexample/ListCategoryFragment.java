@@ -1,5 +1,6 @@
 package com.example.pr_idi.mydatabaseexample;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,17 @@ public class ListCategoryFragment extends Fragment {
 
     private BookData bookData;
     private RecyclerView rv;
+    private ListCategoryAdapter rvAdapter;
+
+    public interface ListCategoryFragmentListener {
+        void onAddBook();
+    }
+
+    private ListCategoryFragmentListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.book_rv, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_category, container, false);
 
         bookData = BookData.getInstance(getActivity().getApplicationContext());
         bookData.open();
@@ -32,17 +40,39 @@ public class ListCategoryFragment extends Fragment {
         rv.setHasFixedSize(true);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        rv.setAdapter(new BookAdapter(bookData));
+        rvAdapter = new ListCategoryAdapter(bookData);
+        rv.setAdapter(rvAdapter);
 
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab_btn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("MyActivity","FAB premut!");
+                listener.onAddBook();
             }
         });
 
         return view;
     }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        listener = (ListCategoryFragment.ListCategoryFragmentListener) getActivity();
+        Log.v("TEST", "onAttach!!!");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    public void updateBooks() {
+        rvAdapter.updateList();
+        rvAdapter.notifyDataSetChanged();
+    }
+
 
 }

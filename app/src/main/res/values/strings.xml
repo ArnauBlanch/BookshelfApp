@@ -4,4 +4,24 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_books">There are no books</string>
+    <string name="snackbar_book_created">Book created succesfully</string>
+    <string name="error_msg_required">Required field</string>
+    <string name="save_caps">SAVE</string>
+
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="year">Year</string>
+    <string name="publisher">Publisher</string>
+    <string name="category">Category</string>
+    <string name="pers_eval">Personal evaluation</string>
+
+    <string name="msg_title">Please, enter title</string>
+    <string name="msg_author">Please, enter author</string>
+    <string name="msg_year">Please, enter year</string>
+    <string name="msg_publisher">Please, enter publisher</string>
+    <string name="msg_category">Please, enter category</string>
+    <string name="msg_pers_eval">Please, enter evaluation</string>
+    <string name="dialog_delete_confirmation">Are you sure you want to delete this book?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

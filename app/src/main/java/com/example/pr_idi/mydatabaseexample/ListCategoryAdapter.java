@@ -1,23 +1,29 @@
 package com.example.pr_idi.mydatabaseexample;
 
+import android.app.Activity;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Arnau on 12/11/16.
- */
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+
+public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapter.BookViewHolder> {
 
     private List<Book> bookList;
     private BookData bookData;
 
-    public BookAdapter(BookData bookData) {
+    public ListCategoryAdapter(BookData bookData) {
         this.bookData = bookData;
         bookList = bookData.getAllBooks();
     }
@@ -33,6 +39,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         bookViewHolder.setTitle(book.getTitle());
         bookViewHolder.setAuthor(book.getAuthor());
         bookViewHolder.setYear(book.getYear());
+        bookViewHolder.setId(book.getId());
+        bookViewHolder.setPublisher(book.getPublisher());
+        bookViewHolder.setPersEval(book.getPersonal_evaluation());
     }
 
     // Create new views (invoked by the layout manager)
@@ -50,6 +59,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     public Book getItem(int i) {
         return bookList.get(i);
+    }
+
+    public void addBook(Book b) {
+        bookList.add(b);
+        int pos = bookList.indexOf(b);
+        notifyItemInserted(pos);
+        notifyItemRangeChanged(pos, bookList.size());
     }
 
     public void addItem() {
@@ -70,7 +86,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         notifyItemRangeChanged(pos, bookList.size());
     }
 
-    public void removeItem(int position) {
+    public void deleteBook(int position) {
         bookData.deleteBook(bookList.get(position));
         bookList.remove(position);
         notifyItemRemoved(position);
@@ -78,21 +94,35 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
 
-    public static class BookViewHolder extends RecyclerView.ViewHolder {
+    public static class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView title;
         private TextView author;
         private TextView year;
+        private TextView publisher;
+        private TextView persEval;
+        private long bookId;
 
         public BookViewHolder(View v) {
             super(v);
 
+            v.setOnClickListener(this);
+            v.setLongClickable(true);
+            v.setOnLongClickListener(this);
+
             title = (TextView) v.findViewById(R.id.book_title);
             author = (TextView) v.findViewById(R.id.book_author);
             year = (TextView) v.findViewById(R.id.book_year);
+            publisher = (TextView) v.findViewById(R.id.book_publisher);
+            persEval = (TextView) v.findViewById(R.id.book_persEval);
+
         }
 
         public void setTitle(String t) {
             title.setText(t);
+        }
+
+        public String getTitle() {
+            return String.valueOf(title.getText());
         }
 
         public void setAuthor(String t) {
@@ -101,6 +131,40 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         public void setYear(Integer t) {
             year.setText("("+String.valueOf(t)+")");
+        }
+
+        public void setPersEval(String t) {
+            persEval.setText(t);
+        }
+
+        public void setPublisher(String t) {
+            publisher.setText(t);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.v("ITEM", "onClick " + getTitle() + "!");
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            ((AppCompatActivity)v.getContext()).getSupportFragmentManager();
+
+            FragmentTransaction ft = ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction();
+            Fragment prev = ((AppCompatActivity)v.getContext()).getSupportFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+
+            // Create and show the dialog.
+            DialogFragment newFragment = DeleteDialogFragment.newInstance(bookId);
+            newFragment.show(ft, "dialog");
+            return true;
+        }
+
+        public void setId(long id) {
+            bookId = id;
         }
     }
 }

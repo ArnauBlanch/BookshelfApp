@@ -1,5 +1,7 @@
 package com.example.pr_idi.mydatabaseexample;
 
+import android.support.v7.widget.RecyclerView;
+
 /**
  * Book
  * Created by pr_idi on 10/11/16.

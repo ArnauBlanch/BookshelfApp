@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.pr_idi.mydatabaseexample.Book;
 import com.example.pr_idi.mydatabaseexample.BookData;
 import com.example.pr_idi.mydatabaseexample.DeleteBook.DeleteDialogFragment;
+import com.example.pr_idi.mydatabaseexample.MainActivity;
 import com.example.pr_idi.mydatabaseexample.R;
 
 import org.w3c.dom.Text;
@@ -132,26 +133,8 @@ public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapte
             ft.addToBackStack(null);
 
             // Create and show the dialog.
-            DialogFragment newFragment = DeleteDialogFragment.newInstance(bookId,
-                    new DeleteDialogFragment.DeleteDialogListener() {
-                        @Override
-                        public int describeContents() {
-                            return 0;
-                        }
+            DialogFragment newFragment = DeleteDialogFragment.newInstance(bookId);
 
-                        @Override
-                        public void writeToParcel(Parcel dest, int flags) {
-
-                        }
-
-                        @Override
-                        public void onBookDeleted(final Book b) {
-                            adapter.updateList();
-                            adapter.notifyDataSetChanged();
-                            Log.v("test","updating...");
-                            fragment.showBookDeletedSnackbar(b);
-                        }
-                    });
             newFragment.show(ft, "dialog");
             return true;
         }

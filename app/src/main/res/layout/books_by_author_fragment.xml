@@ -7,14 +7,11 @@
     android:paddingTop="56dp"
     tools:context="com.example.pr_idi.mydatabaseexample.MainActivity">
 
-    <ExpandableListView
-        android:id="@+id/books_by_author_exp_list_view"
-        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/books_by_author_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ExpandableListView>
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>
 

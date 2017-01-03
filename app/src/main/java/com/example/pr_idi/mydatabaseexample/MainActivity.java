@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -16,16 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
-import static com.example.pr_idi.mydatabaseexample.R.id.home;
-import static com.example.pr_idi.mydatabaseexample.R.id.search;
+import com.example.pr_idi.mydatabaseexample.BooksByAuthor.BooksByAuthorFragment;
+import com.example.pr_idi.mydatabaseexample.MainWindow.MainFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private BookData bookData;
-    private SearchableFragment mFragment;
+    private Fragment mFragment;
     private SearchView mSearchView;
     private FragmentManager mFragmentManager;
     private MenuItem mHomeItem;
@@ -75,6 +74,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        // Set the database
+        //setDataBase();
     }
 
     // Life cycle methods. Check whether it is necessary to reimplement them
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if (mFragmentManager.getBackStackEntryCount() == 1) {
             // If the fragment to show is the MainFragment
-            mSearchView.setQueryHint("Search title...");
+            //mSearchView.setQueryHint("Cercar títol...");
             mSearchView.setIconified(true);
             mHomeItem.setVisible(false);
         }
@@ -114,12 +116,12 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present
         getMenuInflater().inflate(R.menu.options_menu, menu);
         // Associate the item with the view
-        MenuItem searchItem = menu.findItem(search);
+        MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
 
-        mHomeItem = menu.findItem(home);
+        mHomeItem = menu.findItem(R.id.home);
 
-        mSearchView.setQueryHint("Search title...");
+        mSearchView.setQueryHint("Cercar títol...");
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -131,8 +133,16 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Book> booksList = new ArrayList<Book>();
-                mFragment.filter(newText);
+                switch (mFragment.getClass().getSimpleName()) {
+                    case "MainFragment" :
+                        ((MainFragment) mFragment).filter(newText);
+                        break;
+                    case "BooksByAuthorFragment" :
+                        ((BooksByAuthorFragment)mFragment).filter(newText);
+                        break;
+                    default :
+                        break;
+                }
                 return true;
             }
         });
@@ -152,13 +162,7 @@ public class MainActivity extends AppCompatActivity
                 mSearchView.setIconified(false);
                 return true;
             case R.id.home :
-                mFragment = new MainFragment();
-                // Add the fragment to the 'fragment_container' FrameLayout
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, mFragment).commit();
-                mHomeItem.setVisible(false);
-                mSearchView.setIconified(true);
-                mSearchView.setQueryHint("Search title...");
+                replaceFragment(new MainFragment(), true, false);
             default :
                 return super.onOptionsItemSelected(item);
         }
@@ -166,43 +170,58 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        CharSequence hint;
-        // Create fragment
-        SearchableFragment newFragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_books_by_author :
-                newFragment = new BooksByAuthorFragment();
-                hint = "Search author...";
-                mSearchView.setIconified(true);
-                mHomeItem.setVisible(true);
+                replaceFragment(new BooksByAuthorFragment(), true, true);
                 break;
             case R.id.nav_home :
-                newFragment = new MainFragment();
-                hint = "Search title...";
-                mSearchView.setIconified(true);
-                mHomeItem.setVisible(false);
+                replaceFragment(new MainFragment(), true, false);
                 break;
             default :
-                hint = "Search title..."; break;
+                break;
         }
-        mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-        // Commit the transaction
-        transaction.commit();
-        // Update global variable
-        mFragment = newFragment;
-
-        // Set the search hint
-        mSearchView.setQueryHint(hint);
 
         // Close the navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    private void replaceFragment(Fragment newFragment, boolean iconifiedSV,
+                                 boolean visibleHI) {
+        mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.fragment_container, newFragment);
+        // Add the transaction to the back stack so the user can navigate back
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+        // Update global variable
+        mFragment = newFragment;
+
+        // Set the search item iconified
+        mSearchView.setIconified(iconifiedSV);
+        // Set the home item visible
+        mHomeItem.setVisible(visibleHI);
+    }
+
+    private void setDataBase() {
+        //////////////////////////////// SET DATABASE
+        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", "REGULAR");
+        bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", "MOLT BONA");
+        bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", "ESPECTACULAR");
+        bookData.createBook("Don Quijote de la Mancha", "Miguel de Cervantes", 1605, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El Gran Gatsby", "Francis Scott Fitzgerald", 1925, "Desconegut", "Novel·la", "REGULAR");
+        bookData.createBook("Todo esto te daré", "Dolores Redondo", 2016, "Editorial Planeta", "Novel·la", "REGULAR");
+        bookData.createBook("El guardián invisible", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", "MOLT BO");
+        bookData.createBook("Legado en los huesos", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", "REGULAR");
+        bookData.createBook("El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, "Desconegut", "Novel·la", "RECOMENABLE");
+        bookData.createBook("Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El otoño del patriarca", "Gabriel García Márquez", 1975, "Desconegut", "Novel·la", "REGULAR");
+        bookData.createBook("El proceso", "Franz Kafka", 1925, "Desconegut", "Novel·la", "NOTABLE");
+        bookData.createBook("La Metamorfosis", "Franz Kafka", 1915, "Desconegut", "Relat", "EXCEL·LENT");
     }
 }

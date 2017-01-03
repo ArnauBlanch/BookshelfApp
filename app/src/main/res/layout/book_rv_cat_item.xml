@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="#ffffff" >
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground" >
 
     <TextView
         android:id="@+id/book_title"
@@ -37,11 +39,7 @@
         android:paddingLeft="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#aaaaaa"
-        android:paddingTop="72dp"/>
+
 
     <TextView
         android:id="@+id/book_publisher"
@@ -70,6 +68,10 @@
         android:gravity="center_vertical|right"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#aaaaaa"
+        />
 
 </RelativeLayout>

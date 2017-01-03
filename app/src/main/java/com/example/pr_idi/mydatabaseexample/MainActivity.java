@@ -181,10 +181,10 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(new MainFragment(), true, false);
                 break;
             case R.id.nav_list_category:
-                replaceFragment(new ListCategoryFragment(), false, false);
+                replaceFragment(new ListCategoryFragment(), true, false);
                 break;
-            case R.id.create_book_fragment:
-                replaceFragment(new CreateBookFragment(), false, false);
+            case R.id.nav_create_book:
+                replaceFragment(new CreateBookFragment(), true, false);
                 break;
             default :
                 break;

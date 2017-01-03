@@ -2,7 +2,9 @@ package com.example.pr_idi.mydatabaseexample.BooksByCategory;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pr_idi.mydatabaseexample.Book;
 import com.example.pr_idi.mydatabaseexample.BookData;
 import com.example.pr_idi.mydatabaseexample.R;
 
@@ -21,6 +24,7 @@ public class ListCategoryFragment extends Fragment {
     private BookData bookData;
     private RecyclerView rv;
     private ListCategoryAdapter rvAdapter;
+    private CoordinatorLayout coordinatorLayout;
 
     public interface ListCategoryFragmentListener {
         void onAddBook();
@@ -32,6 +36,8 @@ public class ListCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_category, container, false);
 
+        coordinatorLayout = (CoordinatorLayout)view.findViewById(R.id.clayout);
+
         bookData = BookData.getInstance(getActivity().getApplicationContext());
         bookData.open();
 
@@ -40,7 +46,7 @@ public class ListCategoryFragment extends Fragment {
         rv.setHasFixedSize(true);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        rvAdapter = new ListCategoryAdapter(bookData);
+        rvAdapter = new ListCategoryAdapter(bookData, this);
         rv.setAdapter(rvAdapter);
 
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab_btn);
@@ -72,6 +78,20 @@ public class ListCategoryFragment extends Fragment {
     public void updateBooks() {
         rvAdapter.updateList();
         rvAdapter.notifyDataSetChanged();
+    }
+
+    public void showBookDeletedSnackbar(final Book b) {
+        Snackbar.make(coordinatorLayout, "'"+b.getTitle()+"' "+getString(R.string.was_deleted), Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bookData.addBook(b);
+                        updateBooks();
+                        Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "'"+b.getTitle()+"' " + getString(R.string.was_restored), Snackbar.LENGTH_LONG);
+                        snackbar1.show();
+                    }
+                })
+                .show();
     }
 
 

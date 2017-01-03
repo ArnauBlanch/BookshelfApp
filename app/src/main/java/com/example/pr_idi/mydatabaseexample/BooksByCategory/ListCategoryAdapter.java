@@ -1,6 +1,8 @@
 package com.example.pr_idi.mydatabaseexample.BooksByCategory;
 
 import android.app.Activity;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,14 +25,16 @@ import java.util.List;
 import java.util.Random;
 
 
-public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapter.BookViewHolder> {
+public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapter.BookViewHolder>{
 
     private List<Book> bookList;
     private BookData bookData;
+    private ListCategoryFragment fragment;
 
-    public ListCategoryAdapter(BookData bookData) {
+    public ListCategoryAdapter(BookData bookData, ListCategoryFragment fragment) {
         this.bookData = bookData;
         bookList = bookData.getAllBooks();
+        this.fragment = fragment;
     }
 
     @Override
@@ -55,61 +59,26 @@ public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapte
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.book_rv_cat_item, viewGroup, false);
 
-        return new BookViewHolder(v);
+        return new BookViewHolder(v, this);
     }
 
     public void updateList() {
         bookList = bookData.getAllBooks();
     }
 
-    public Book getItem(int i) {
-        return bookList.get(i);
-    }
 
-    public void addBook(Book b) {
-        bookList.add(b);
-        int pos = bookList.indexOf(b);
-        notifyItemInserted(pos);
-        notifyItemRangeChanged(pos, bookList.size());
-    }
-
-    public void addItem() {
-        String[] newBook = new String[] { "Miguel Strogoff", "Jules Verne", "Ulysses", "James Joyce", "Don Quijote", "Miguel de Cervantes", "Metamorphosis", "Kafka" };
-        int nextInt = new Random().nextInt(4);
-        Book b = bookData.createBook(newBook[nextInt*2], newBook[nextInt*2 + 1]);
-        bookList.add(b);
-        int pos = bookList.indexOf(b);
-        notifyItemInserted(pos);
-        notifyItemRangeChanged(pos, bookList.size());
-    }
-
-    public void addItem(String title, String author, Integer year, String publisher, String category, String persEval) {
-        Book b = bookData.createBook(title, author, year, publisher, category, persEval);
-        bookList.add(b);
-        int pos = bookList.indexOf(b);
-        notifyItemInserted(pos);
-        notifyItemRangeChanged(pos, bookList.size());
-    }
-
-    public void deleteBook(int position) {
-        bookData.deleteBook(bookList.get(position));
-        bookList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, bookList.size());
-    }
-
-
-    public static class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView title;
         private TextView author;
         private TextView year;
         private TextView publisher;
         private TextView persEval;
         private long bookId;
+        private ListCategoryAdapter adapter;
 
-        public BookViewHolder(View v) {
+        public BookViewHolder(View v, ListCategoryAdapter adapter) {
             super(v);
-
+            this.adapter = adapter;
             v.setOnClickListener(this);
             v.setLongClickable(true);
             v.setOnLongClickListener(this);
@@ -163,7 +132,26 @@ public class ListCategoryAdapter extends RecyclerView.Adapter<ListCategoryAdapte
             ft.addToBackStack(null);
 
             // Create and show the dialog.
-            DialogFragment newFragment = DeleteDialogFragment.newInstance(bookId);
+            DialogFragment newFragment = DeleteDialogFragment.newInstance(bookId,
+                    new DeleteDialogFragment.DeleteDialogListener() {
+                        @Override
+                        public int describeContents() {
+                            return 0;
+                        }
+
+                        @Override
+                        public void writeToParcel(Parcel dest, int flags) {
+
+                        }
+
+                        @Override
+                        public void onBookDeleted(final Book b) {
+                            adapter.updateList();
+                            adapter.notifyDataSetChanged();
+                            Log.v("test","updating...");
+                            fragment.showBookDeletedSnackbar(b);
+                        }
+                    });
             newFragment.show(ft, "dialog");
             return true;
         }

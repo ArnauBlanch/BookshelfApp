@@ -6,9 +6,13 @@
             <item
                 android:id="@+id/nav_list_category"
                 android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:checkable="true"
+                android:checkableBehavior="single"
                 android:title="Llibres per categoria" />
             <item
                 android:id="@+id/nav_create_book"
+                android:checkable="true"
+                android:checkableBehavior="single"
                 android:icon="@drawable/ic_format_list_bulleted_black_24dp"
                 android:title="Afegeix nou llibre" />
         </menu>
@@ -18,14 +22,20 @@
         <menu>
             <item
                 android:id="@+id/nav_home"
+                android:checkable="true"
+                android:checkableBehavior="single"
                 android:icon="@drawable/ic_home_black_24dp"
                 android:title="Inici" />
             <item
                 android:id="@+id/nav_books_by_author"
+                android:checkable="true"
+                android:checkableBehavior="single"
                 android:icon="@drawable/ic_people_black_24dp"
                 android:title="Llibres per autor" />
             <item
                 android:id="@+id/nav_edit_personal_valoration"
+                android:checkable="true"
+                android:checkableBehavior="single"
                 android:icon="@drawable/ic_star_black_24dp"
                 android:title="Editar valoracions personals" />
         </menu>
@@ -33,10 +43,14 @@
 
     <item
         android:id="@+id/nav_help"
+        android:checkable="true"
+        android:checkableBehavior="single"
         android:icon="@drawable/ic_help_black_24dp"
         android:title="Ajut" />
     <item
         android:id="@+id/nav_about"
+        android:checkable="true"
+        android:checkableBehavior="single"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="Sobre l'aplicació" />
 

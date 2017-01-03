@@ -1,6 +1,5 @@
 package com.example.pr_idi.mydatabaseexample;
 
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private SearchView mSearchView;
     private FragmentManager mFragmentManager;
     private MenuItem mHomeItem;
+    private NavigationView mNavigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,9 +73,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         // Set the database
         //setDataBase();
@@ -181,10 +179,10 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(new MainFragment(), true, false);
                 break;
             case R.id.nav_list_category:
-                replaceFragment(new ListCategoryFragment(), false, false);
+                replaceFragment(new ListCategoryFragment(), true, true);
                 break;
             case R.id.create_book_fragment:
-                replaceFragment(new CreateBookFragment(), false, false);
+                replaceFragment(new CreateBookFragment(), true, true);
                 break;
             default :
                 break;
@@ -197,6 +195,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * @param newFragment fragment that replace the actual fragment
+     * @param iconifiedSV collapse (true) or expande (false) the search button
+     * @param visibleHI set the toolbar home button visible (true) or not (false)
+     */
     private void replaceFragment(Fragment newFragment, boolean iconifiedSV,
                                  boolean visibleHI) {
         mFragmentManager = getSupportFragmentManager();

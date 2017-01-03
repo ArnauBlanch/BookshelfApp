@@ -24,4 +24,22 @@
     <string name="dialog_delete_confirmation">Are you sure you want to delete this book?</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+
+    <string name="very_good">Very good</string>
+    <string name="good">Good</string>
+    <string name="regular">Regular</string>
+    <string name="bad">Bad</string>
+    <string name="very_bad">Very bad</string>
+    <string name="select_evaluation">Select evaluation</string>
+
+    <string-array name="evaluations">
+        <item>Very good</item>
+        <item>Good</item>
+        <item>Regular</item>
+        <item>Bad</item>
+        <item>Very bad</item>
+        <item>Personal evaluation</item>
+    </string-array>
+
+
 </resources>

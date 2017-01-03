@@ -8,4 +8,9 @@
         <item name="colorControlNormal">#FFF</item>
     </style>
 
+    <style name="Hyperlink">
+        <item name="android:textColor">#3498db</item>
+        <item name="android:background">@drawable/hyperlink_underline</item>
+    </style>
+
 </resources>

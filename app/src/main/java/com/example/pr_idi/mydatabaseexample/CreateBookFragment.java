@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.view.LayoutInflater;
@@ -17,14 +18,16 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class CreateBookFragment extends Fragment {
-
-    private final String[] evaluations = {"very good", "good", "regular", "bad", "very bad"};
 
     private TextInputLayout titleLayout;
     private EditText titleEditText;
@@ -35,7 +38,7 @@ public class CreateBookFragment extends Fragment {
     private TextInputLayout publisherLayout;
     private EditText publisherEditText;
     private TextInputLayout persEvalLayout;
-    private EditText persEvalEditText;
+    private AppCompatSpinner persEvalSpinner;
     private TextInputLayout categoryLayout;
     private EditText categoryEditText;
     private LinearLayout parentLayout;
@@ -94,11 +97,39 @@ public class CreateBookFragment extends Fragment {
         publisherEditText = (EditText) view.findViewById(R.id.publisher);
         categoryLayout = (TextInputLayout) view.findViewById(R.id.categoryLayout);
         categoryEditText = (EditText) view.findViewById(R.id.category);
-        persEvalLayout = (TextInputLayout) view.findViewById(R.id.evaluationLayout);
-        persEvalEditText = (EditText) view.findViewById(R.id.evaluation);
+        //persEvalLayout = (TextInputLayout) view.findViewById(R.id.evaluationLayout);
+        persEvalSpinner = (AppCompatSpinner) view.findViewById(R.id.evaluation);
 
         parentLayout = (LinearLayout) view.findViewById(R.id.parentlayout);
         animShake = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.shake);
+
+
+        String[] evaluations = getResources().getStringArray(R.array.evaluations);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, evaluations) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                View v = super.getView(position, convertView, parent);
+                if (position == getCount()) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText("");
+                    ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                }
+
+                return v;
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount()-1; // you dont display last item. It is used as hint.
+            }
+
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        persEvalSpinner.setAdapter(adapter);
+        persEvalSpinner.setSelection(adapter.getCount());
+
+
 
         setupUI(parentLayout);
 
@@ -174,9 +205,9 @@ public class CreateBookFragment extends Fragment {
         Integer year = Integer.parseInt(yearEditText.getText().toString().trim());
         String publisher = publisherEditText.getText().toString().trim();
         String category = categoryEditText.getText().toString().trim();
-        String persEval = persEvalEditText.getText().toString().trim();
+        //String persEval = persEvalEditText.getText().toString().trim();
 
-        listener.onBookCreate(title, author, year, publisher, category, persEval);
+        //listener.onBookCreate(title, author, year, publisher, category, persEval);
     }
 
     // Comprovació de camps
@@ -262,12 +293,12 @@ public class CreateBookFragment extends Fragment {
     }
 
     private boolean checkPersEval() {
-        String persEval = persEvalEditText.getText().toString().trim();
+        /*String persEval = persEvalEditText.getText().toString().trim();
         if (persEval.isEmpty()) {
             setErrors(persEvalLayout, persEvalEditText, R.string.msg_pers_eval);
             return false;
         }
-
+        String[] evaluations = getResources().getStringArray(R.array.evaluations);
         for (String eval : evaluations) {
             if (persEval.equals(eval)) {
                 persEvalLayout.setErrorEnabled(false);
@@ -275,8 +306,8 @@ public class CreateBookFragment extends Fragment {
             }
         }
         setErrors(persEvalLayout, persEvalEditText, R.string.msg_pers_eval);
+        return false;*/
         return false;
-
     }
 
 

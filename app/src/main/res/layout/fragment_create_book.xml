@@ -1,11 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+<LinearLayout
     android:orientation="vertical"
     android:id="@+id/parentlayout"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,143 +21,221 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/title"
+            android:src="@drawable/book" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/titleLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
+            android:id="@+id/titleLayout"
+            android:layout_height="60dp">
             <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/title"
                 android:maxLines="1"
                 android:inputType="text"
                 android:scrollHorizontally="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/author"
+            android:src="@drawable/person" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/authorLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
+            android:id="@+id/authorLayout"
+            android:layout_height="60dp">
             <EditText
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/author"
                 android:maxLines="1"
                 android:inputType="text"
                 android:scrollHorizontally="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/year"
+            android:src="@drawable/clock" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/yearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
+            android:id="@+id/yearLayout"
+            android:layout_height="60dp">
             <EditText
                 android:id="@+id/year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/year"
                 android:maxLines="1"
-                android:inputType="text"
+                android:inputType="number"
                 android:scrollHorizontally="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/year"
+            android:src="@drawable/publisher" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/publisherLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
+            android:id="@+id/publisherLayout"
+            android:layout_height="60dp">
             <EditText
                 android:id="@+id/publisher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/publisher"
                 android:maxLines="1"
                 android:inputType="text"
                 android:scrollHorizontally="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/category"
+            android:src="@drawable/category" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/categoryLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
+            android:id="@+id/categoryLayout"
+            android:layout_height="60dp">
             <EditText
                 android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/category"
                 android:maxLines="1"
                 android:inputType="text"
                 android:scrollHorizontally="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/evaluationLayout"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp">
+
+        <ImageView
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/pers_eval"
+            android:src="@drawable/evaluation" />
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="72dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" >
-
-            <EditText
-                android:id="@+id/evaluation"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="0dp" >
+            <TextView
+                android:id="@+id/evalLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_gravity="center_vertical"
-                android:hint="@string/pers_eval"
-                android:maxLines="1"
-                android:inputType="text"
-                android:scrollHorizontally="true"
-                android:textSize="16sp" />
-        </android.support.design.widget.TextInputLayout>
+                android:text="@string/pers_eval"
+                android:textColor="@color/accent_material_light"
+                android:textSize="12sp"
+                android:paddingLeft="4dp"
+                />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/evaluation"
+                android:layout_marginLeft="-4dp"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:textSize="16sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:background="#000" />
+        </LinearLayout>
+    </LinearLayout>
 
-
-
-
-</LinearLayout>
-
+</LinearLayout></ScrollView>

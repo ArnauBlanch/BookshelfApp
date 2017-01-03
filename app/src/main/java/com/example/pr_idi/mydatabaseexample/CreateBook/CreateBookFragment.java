@@ -57,7 +57,7 @@ public class CreateBookFragment extends Fragment {
 
     private CreateBookFragmentListener listener;
     public interface CreateBookFragmentListener {
-        void onBookCreated(long bookId);
+        void onBookCreated(final Book b);
     }
 
     @Override
@@ -119,16 +119,15 @@ public class CreateBookFragment extends Fragment {
 
         setupUI(parentLayout);
 
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab_btn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("MyActivity","FAB premut!");
-                saveListener();
-            }
-        });
+        getActivity().findViewById(R.id.fab_btn_creation_done).setVisibility(View.VISIBLE);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        getActivity().findViewById(R.id.fab_btn_creation_done).setVisibility(View.GONE);
+        super.onDestroyView();
     }
 
 
@@ -185,9 +184,7 @@ public class CreateBookFragment extends Fragment {
         String persEval = persEvalSpinner.getSelectedItem().toString().trim();
 
         Book b = bookData.createBook(title, author, year, publisher, category, persEval);
-        long bookId = b.getId();
-        Log.v("creation","listener! " + b.toString());
-        listener.onBookCreated(bookId);
+        listener.onBookCreated(b);
     }
 
     // Comprovació de camps

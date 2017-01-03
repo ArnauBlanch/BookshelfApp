@@ -49,4 +49,9 @@
 
     <string name="insert_pers_eval_text">Personal evaluation</string>
     <string name="save">Save</string>
+    <string name="delete_title">Delete from database</string>
+    <string name="was_restored">was restored</string>
+    <string name="was_deleted">was deleted</string>
+    <string name="UNDO">UNDO</string>
+    <string name="was_created">was created</string>
 </resources>

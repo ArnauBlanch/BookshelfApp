@@ -1,9 +1,11 @@
-package com.example.pr_idi.mydatabaseexample;
+﻿package com.example.pr_idi.mydatabaseexample;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,11 +17,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.pr_idi.mydatabaseexample.BooksByAuthor.BooksByAuthorFragment;
 import com.example.pr_idi.mydatabaseexample.BooksByCategory.ListCategoryFragment;
 import com.example.pr_idi.mydatabaseexample.CreateBook.CreateBookFragment;
 import com.example.pr_idi.mydatabaseexample.MainWindow.MainFragment;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ListCategoryFragment.ListCategoryFragmentListener, CreateBookFragment.CreateBookFragmentListener {
@@ -75,6 +80,23 @@ public class MainActivity extends AppCompatActivity
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fabCreate = (FloatingActionButton)findViewById(R.id.fab_btn_create);
+        fabCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("MyActivity","FAB premut!");
+                onAddBook();
+            }
+        });
+        FloatingActionButton fabCreationDone = (FloatingActionButton)findViewById(R.id.fab_btn_creation_done);
+        fabCreationDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("MyActivity","FAB2 premut!");
+                ((CreateBookFragment)mFragment).saveListener();
+            }
+        });
 
         // Set the database
         //setDataBase();
@@ -239,12 +261,48 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddBook() {
-        replaceFragment(new CreateBookFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
+        replaceFragment(new CreateBookFragment(), true, false); // TODO: què són el 2n i 3r paràmetre?
+    }
+
+
+    private void showBookDeletedSnackbar(final Book b) {
+        Snackbar.make(findViewById(R.id.clayout), "'"+b.getTitle()+"' "+getString(R.string.was_deleted), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.UNDO), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bookData.addBook(b);
+                        ((ListCategoryFragment)mFragment).updateBooks();
+                        Snackbar snackbar1 = Snackbar.make(findViewById(R.id.clayout), "'"+b.getTitle()+"' " + getString(R.string.was_restored), Snackbar.LENGTH_LONG);
+                        snackbar1.show();
+                    }
+                })
+                .show();
+    }
+
+    private void showBookCreatedSnackbar(final Book b) {
+        Snackbar.make(findViewById(R.id.clayout), "'"+b.getTitle()+"' " + getString(R.string.was_created), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.UNDO), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bookData.deleteBookById(b.getId());
+                        ((ListCategoryFragment)mFragment).updateBooks();
+                        Snackbar snackbar1 = Snackbar.make(findViewById(R.id.clayout), "'"+b.getTitle()+"' " + getString(R.string.was_deleted), Snackbar.LENGTH_LONG);
+                        snackbar1.show();
+                    }
+                })
+                .show();
     }
 
     @Override
-    public void onBookCreated(long bookId) {
-        replaceFragment(new ListCategoryFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
+    public void onBookCreated(final Book b) {
+        replaceFragment(new ListCategoryFragment(), true, false); // TODO: què són el 2n i 3r paràmetre?
+        showBookCreatedSnackbar(b);
         // TODO: snackbar informatiu + adaptar segons fragment previ a la creació
+    }
+
+    public void onBookDeleteConfirmed(Book b) {
+        bookData.deleteBookById(b.getId());
+        ((ListCategoryFragment)mFragment).updateBooks();
+        showBookDeletedSnackbar(b);
     }
 }

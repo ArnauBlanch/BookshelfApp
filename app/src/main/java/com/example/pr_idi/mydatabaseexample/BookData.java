@@ -106,15 +106,20 @@ public class BookData {
         long insertId = database.insert(MySQLiteHelper.TABLE_BOOKS, null,
                 values);
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BOOKS,
-                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
-        cursor.moveToFirst();
-        Book newBook = cursorToBook(cursor);
+        return getBookById(insertId);
+    }
 
-        cursor.close();
+    public void addBook(Book b) {
+        ContentValues values = new ContentValues();
 
-        return newBook;
+        values.put(MySQLiteHelper.COLUMN_TITLE, b.getTitle());
+        values.put(MySQLiteHelper.COLUMN_AUTHOR, b.getAuthor());
+        values.put(MySQLiteHelper.COLUMN_YEAR, b.getYear());
+        values.put(MySQLiteHelper.COLUMN_PUBLISHER, b.getPublisher());
+        values.put(MySQLiteHelper.COLUMN_CATEGORY, b.getCategory());
+        values.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, b.getPersonal_evaluation());
+
+        database.insert(MySQLiteHelper.TABLE_BOOKS, null, values);
     }
 
     public void deleteBook(Book book) {
@@ -139,6 +144,7 @@ public class BookData {
         return books;
     }
 
+
     private Book cursorToBook(Cursor cursor) {
         Book book = new Book();
         book.setId(cursor.getLong(0));
@@ -162,5 +168,17 @@ public class BookData {
                 values,
                 MySQLiteHelper.COLUMN_ID + " = " + id,
                 null);
+    }
+
+    public Book getBookById(long id) {
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BOOKS,
+                allColumns, MySQLiteHelper.COLUMN_ID + " = " + id, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Book newBook = cursorToBook(cursor);
+
+        cursor.close();
+
+        return newBook;
     }
 }

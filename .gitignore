@@ -45,3 +45,7 @@ captures/
 *.lock
 
 *.bin
+
+.idea/gradle.xml
+
+.idea/misc.xml

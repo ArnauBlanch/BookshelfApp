@@ -3,6 +3,7 @@ package com.example.pr_idi.mydatabaseexample.DeleteBook;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -22,20 +23,19 @@ public class DeleteDialogFragment extends DialogFragment {
     private long bookId;
     private BookData bookData;
     private Book book;
-    private DeleteDialogListener mListener;
 
-    public interface DeleteDialogListener extends Parcelable {
+    public interface DeleteDialogListener {
         void onBookDeleted(final Book b);
     }
 
-    public static DeleteDialogFragment newInstance(long bookId, DeleteDialogListener listener) {
+    public static DeleteDialogFragment newInstance(long bookId) {
         DeleteDialogFragment f = new DeleteDialogFragment();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putLong("bookId", bookId);
-        args.putParcelable("listener", listener);
         f.setArguments(args);
+
         return f;
     }
 
@@ -47,13 +47,12 @@ public class DeleteDialogFragment extends DialogFragment {
         bookData.open();
 
         bookId = getArguments().getLong("bookId");
-        mListener = getArguments().getParcelable("listener");
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DeleteDialogTheme);
         builder.setMessage(R.string.dialog_delete_confirmation)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        deleteBookConfirmed();
+                        ((MainActivity) getActivity()).onBookDeleteConfirmed(book);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -77,10 +76,5 @@ public class DeleteDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    private void deleteBookConfirmed() {
-        bookData.deleteBookById(book.getId());
-        mListener.onBookDeleted(book);
     }
 }

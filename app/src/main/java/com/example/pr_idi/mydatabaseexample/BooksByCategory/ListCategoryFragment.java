@@ -49,16 +49,15 @@ public class ListCategoryFragment extends Fragment {
         rvAdapter = new ListCategoryAdapter(bookData, this);
         rv.setAdapter(rvAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab_btn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("MyActivity","FAB premut!");
-                listener.onAddBook();
-            }
-        });
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.GONE);
+        super.onDestroyView();
     }
 
 
@@ -80,19 +79,7 @@ public class ListCategoryFragment extends Fragment {
         rvAdapter.notifyDataSetChanged();
     }
 
-    public void showBookDeletedSnackbar(final Book b) {
-        Snackbar.make(coordinatorLayout, "'"+b.getTitle()+"' "+getString(R.string.was_deleted), Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        bookData.addBook(b);
-                        updateBooks();
-                        Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "'"+b.getTitle()+"' " + getString(R.string.was_restored), Snackbar.LENGTH_LONG);
-                        snackbar1.show();
-                    }
-                })
-                .show();
-    }
+
 
 
 }

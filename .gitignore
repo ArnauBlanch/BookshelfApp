@@ -41,8 +41,6 @@ captures/
 
 
 .idea/
-<<<<<<< HEAD
-=======
 
 *.lock
 
@@ -53,4 +51,3 @@ captures/
 .idea/misc.xml
 
 gradle/wrapper/gradle-wrapper.properties
->>>>>>> refs/remotes/origin/master

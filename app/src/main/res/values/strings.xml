@@ -47,12 +47,6 @@
 
     <string name="home_title">Home</string>
 
-<<<<<<< HEAD
-    <string name="insert_pers_eval_text">Valoració personal</string>
-    <string name="save">Guardar</string>
-    <string name="cancel">Cancel·lar</string>
-=======
     <string name="insert_pers_eval_text">Personal evaluation</string>
     <string name="save">Save</string>
->>>>>>> refs/remotes/origin/master
 </resources>

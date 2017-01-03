@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Book Database Test</string>
+    <string name="app_name">MyDatabaseExample</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_books">There are no books</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="search_title">Search</string>
+
+    <string name="home_title">Home</string>
+
+    <string name="insert_pers_eval_text">Valoració personal</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancel·lar</string>
 </resources>

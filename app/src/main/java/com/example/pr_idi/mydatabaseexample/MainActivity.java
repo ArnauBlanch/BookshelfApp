@@ -14,14 +14,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.pr_idi.mydatabaseexample.BooksByAuthor.BooksByAuthorFragment;
+<<<<<<< HEAD
+=======
+import com.example.pr_idi.mydatabaseexample.BooksByCategory.ListCategoryFragment;
+import com.example.pr_idi.mydatabaseexample.CreateBook.CreateBookFragment;
+>>>>>>> refs/remotes/origin/master
 import com.example.pr_idi.mydatabaseexample.MainWindow.MainFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ListCategoryFragment.ListCategoryFragmentListener, CreateBookFragment.CreateBookFragmentListener {
 
     private BookData bookData;
     private Fragment mFragment;
@@ -96,7 +102,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { // TODO: Check changes [Arnau]
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -176,6 +182,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_home :
                 replaceFragment(new MainFragment(), true, false);
+<<<<<<< HEAD
+=======
+                break;
+            case R.id.nav_list_category:
+                replaceFragment(new ListCategoryFragment(), false, false);
+                break;
+            case R.id.create_book_fragment:
+                replaceFragment(new CreateBookFragment(), false, false);
+>>>>>>> refs/remotes/origin/master
                 break;
             default :
                 break;
@@ -206,6 +221,7 @@ public class MainActivity extends AppCompatActivity
         // Set the home item visible
         mHomeItem.setVisible(visibleHI);
     }
+<<<<<<< HEAD
 
     private void setDataBase() {
         //////////////////////////////// SET DATABASE
@@ -223,5 +239,35 @@ public class MainActivity extends AppCompatActivity
         bookData.createBook("El otoño del patriarca", "Gabriel García Márquez", 1975, "Desconegut", "Novel·la", "REGULAR");
         bookData.createBook("El proceso", "Franz Kafka", 1925, "Desconegut", "Novel·la", "NOTABLE");
         bookData.createBook("La Metamorfosis", "Franz Kafka", 1915, "Desconegut", "Relat", "EXCEL·LENT");
+=======
+
+    private void setDataBase() {
+        //////////////////////////////// SET DATABASE
+        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", "REGULAR");
+        bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", getString(R.string.very_good));
+        bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", getString(R.string.very_bad));
+        bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", getString(R.string.bad));
+        bookData.createBook("Don Quijote de la Mancha", "Miguel de Cervantes", 1605, "Desconegut", "Novel·la", getString(R.string.good));
+        bookData.createBook("El Gran Gatsby", "Francis Scott Fitzgerald", 1925, "Desconegut", "Novel·la", getString(R.string.regular));
+        bookData.createBook("Todo esto te daré", "Dolores Redondo", 2016, "Editorial Planeta", "Novel·la", getString(R.string.regular));
+        bookData.createBook("El guardián invisible", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", getString(R.string.good));
+        bookData.createBook("Legado en los huesos", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", getString(R.string.bad));
+        bookData.createBook("El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, "Desconegut", "Novel·la", getString(R.string.good));
+        bookData.createBook("Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, "Desconegut", "Novel·la", getString(R.string.very_good));
+        bookData.createBook("El otoño del patriarca", "Gabriel García Márquez", 1975, "Desconegut", "Novel·la", getString(R.string.very_bad));
+        bookData.createBook("El proceso", "Franz Kafka", 1925, "Desconegut", "Novel·la", getString(R.string.regular));
+        bookData.createBook("La Metamorfosis", "Franz Kafka", 1915, "Desconegut", "Relat", getString(R.string.very_good));
+    }
+
+    @Override
+    public void onAddBook() {
+        replaceFragment(new CreateBookFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
+    }
+
+    @Override
+    public void onBookCreated(long bookId) {
+        replaceFragment(new ListCategoryFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
+        // TODO: snackbar informatiu + adaptar segons fragment previ a la creació
+>>>>>>> refs/remotes/origin/master
     }
 }

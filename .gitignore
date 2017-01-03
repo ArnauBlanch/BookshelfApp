@@ -41,3 +41,16 @@ captures/
 
 
 .idea/
+<<<<<<< HEAD
+=======
+
+*.lock
+
+*.bin
+
+.idea/gradle.xml
+
+.idea/misc.xml
+
+gradle/wrapper/gradle-wrapper.properties
+>>>>>>> refs/remotes/origin/master

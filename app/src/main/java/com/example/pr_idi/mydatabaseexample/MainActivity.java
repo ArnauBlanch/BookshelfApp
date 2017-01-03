@@ -181,7 +181,11 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(new MainFragment(), true, false);
                 break;
             case R.id.nav_list_category:
-                replaceFragment(new ListCategoryFragment(), true, true);
+                replaceFragment(new ListCategoryFragment(), false, false);
+                break;
+            case R.id.create_book_fragment:
+                replaceFragment(new CreateBookFragment(), false, false);
+                break;
             default :
                 break;
         }
@@ -232,12 +236,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddBook() {
-        replaceFragment(new CreateBookFragment(), true, true); // TODO: què són el 2n i 3r paràmetre?
+        replaceFragment(new CreateBookFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
     }
 
     @Override
     public void onBookCreated(long bookId) {
-        replaceFragment(new ListCategoryFragment(), true, true); // TODO: què són el 2n i 3r paràmetre?
+        replaceFragment(new ListCategoryFragment(), false, false); // TODO: què són el 2n i 3r paràmetre?
         // TODO: snackbar informatiu + adaptar segons fragment previ a la creació
     }
 }

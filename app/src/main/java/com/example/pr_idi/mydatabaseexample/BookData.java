@@ -1,14 +1,13 @@
 package com.example.pr_idi.mydatabaseexample;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookData {
 
@@ -42,9 +41,9 @@ public class BookData {
     }
 
     public static BookData getInstance(Context context) {
-        if (instance == null) {
+        if (instance == null)
             instance = new BookData(context);
-        }
+
         return instance;
     }
 
@@ -120,8 +119,7 @@ public class BookData {
 
     public void deleteBook(Book book) {
         long id = book.getId();
-        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID
-                + " = " + id, null);
+        deleteBookById(id);
     }
 
     public List<Book> getAllBooks() {
@@ -151,5 +149,18 @@ public class BookData {
         book.setCategory(cursor.getString(5));
         book.setPersonal_evaluation(cursor.getString(6));
         return book;
+    }
+
+    public void deleteBookById(long id) {
+        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID + " = " + id, null);
+    }
+
+    public void updatePersonalEvaluation(long id, String persEval) {
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, persEval);
+        database.update(MySQLiteHelper.TABLE_BOOKS,
+                values,
+                MySQLiteHelper.COLUMN_ID + " = " + id,
+                null);
     }
 }

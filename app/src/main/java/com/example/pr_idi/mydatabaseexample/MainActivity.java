@@ -1,13 +1,41 @@
 package com.example.pr_idi.mydatabaseexample;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import android.app.SearchManager;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.example.pr_idi.mydatabaseexample.BooksByAuthor.BooksByAuthorFragment;
+import com.example.pr_idi.mydatabaseexample.MainWindow.MainFragment;
+
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    private BookData bookData;
+    private Fragment mFragment;
+    private SearchView mSearchView;
+    private FragmentManager mFragmentManager;
+    private MenuItem mHomeItem;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
+
+        bookData = new BookData(this);
+        bookData.open();
 
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
@@ -21,16 +49,179 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Create a new Fragment to be placed in the activity layout
-            ListCategoryFragment firstFragment = new ListCategoryFragment();
+            mFragment = new MainFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            mFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
+                    .add(R.id.fragment_container, mFragment).commit();
+        }
+
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Navigation Drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        // Set the database
+        //setDataBase();
+    }
+
+    // Life cycle methods. Check whether it is necessary to reimplement them
+
+    @Override
+    protected void onResume() {
+        bookData.open();
+        super.onResume();
+    }
+
+    // Life cycle methods. Check whether it is necessary to reimplement them
+
+    @Override
+    protected void onPause() {
+        bookData.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+        else if (mFragmentManager.getBackStackEntryCount() == 1) {
+            // If the fragment to show is the MainFragment
+            //mSearchView.setQueryHint("Cercar títol...");
+            mSearchView.setIconified(true);
+            mHomeItem.setVisible(false);
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        // Associate the item with the view
+        MenuItem searchItem = menu.findItem(R.id.search);
+        mSearchView = (SearchView) searchItem.getActionView();
+
+        mHomeItem = menu.findItem(R.id.home);
+
+        mSearchView.setQueryHint("Cercar títol...");
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                switch (mFragment.getClass().getSimpleName()) {
+                    case "MainFragment" :
+                        ((MainFragment) mFragment).filter(newText);
+                        break;
+                    case "BooksByAuthorFragment" :
+                        ((BooksByAuthorFragment)mFragment).filter(newText);
+                        break;
+                    default :
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+            case R.id.search :
+                mSearchView = (SearchView) item.getActionView();
+                mSearchView.setIconified(false);
+                return true;
+            case R.id.home :
+                replaceFragment(new MainFragment(), true, false);
+            default :
+                return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_books_by_author :
+                replaceFragment(new BooksByAuthorFragment(), true, true);
+                break;
+            case R.id.nav_home :
+                replaceFragment(new MainFragment(), true, false);
+                break;
+            default :
+                break;
+        }
+
+        // Close the navigation drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    private void replaceFragment(Fragment newFragment, boolean iconifiedSV,
+                                 boolean visibleHI) {
+        mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.fragment_container, newFragment);
+        // Add the transaction to the back stack so the user can navigate back
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+        // Update global variable
+        mFragment = newFragment;
+
+        // Set the search item iconified
+        mSearchView.setIconified(iconifiedSV);
+        // Set the home item visible
+        mHomeItem.setVisible(visibleHI);
+    }
+
+    private void setDataBase() {
+        //////////////////////////////// SET DATABASE
+        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", "REGULAR");
+        bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", "MOLT BONA");
+        bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", "ESPECTACULAR");
+        bookData.createBook("Don Quijote de la Mancha", "Miguel de Cervantes", 1605, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El Gran Gatsby", "Francis Scott Fitzgerald", 1925, "Desconegut", "Novel·la", "REGULAR");
+        bookData.createBook("Todo esto te daré", "Dolores Redondo", 2016, "Editorial Planeta", "Novel·la", "REGULAR");
+        bookData.createBook("El guardián invisible", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", "MOLT BO");
+        bookData.createBook("Legado en los huesos", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", "REGULAR");
+        bookData.createBook("El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, "Desconegut", "Novel·la", "RECOMENABLE");
+        bookData.createBook("Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, "Desconegut", "Novel·la", "EXCEL·LENT");
+        bookData.createBook("El otoño del patriarca", "Gabriel García Márquez", 1975, "Desconegut", "Novel·la", "REGULAR");
+        bookData.createBook("El proceso", "Franz Kafka", 1925, "Desconegut", "Novel·la", "NOTABLE");
+        bookData.createBook("La Metamorfosis", "Franz Kafka", 1915, "Desconegut", "Relat", "EXCEL·LENT");
+    }
 }

@@ -50,13 +50,13 @@ public class PersEvalDialogFragment extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View view = inflater.inflate(R.layout.pers_eval_dialog, null);
+        //final View view = inflater.inflate(R.layout.pers_eval_dialog, null);
 
         // Set the edit text content with the actual bookId personal evaluation
         bookData = new BookData(getActivity());
         bookData.open();
         List<Book> books = bookData.getAllBooks();
-        editText = (EditText) view.findViewById(R.id.pers_eval);
+        /*editText = (EditText) view.findViewById(R.id.pers_eval);
         for (Book a : books) {
             if (a.getId() == bookId) {
                 editText.setText(a.getPersonal_evaluation());
@@ -82,7 +82,7 @@ public class PersEvalDialogFragment extends DialogFragment {
                                 "No s'ha modificat la valoració personal",
                                 Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
         return builder.create();
     }
 

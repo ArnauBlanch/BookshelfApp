@@ -60,8 +60,12 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
         rv.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter
+        sortBooksList();
         mAdapter = new MainAdapter(booksList);
         rv.setAdapter(mAdapter);
+
+        // Show the add fab button
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
 
         return view;
     }

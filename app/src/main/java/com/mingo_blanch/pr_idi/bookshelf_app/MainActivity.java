@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBookCreated(final Book b) {
-        replaceFragment(new BooksByCategoryFragment());
+        replaceFragment(mBackFragment);
         showBookCreatedSnackbar(b);
         addingBook = false;
     }

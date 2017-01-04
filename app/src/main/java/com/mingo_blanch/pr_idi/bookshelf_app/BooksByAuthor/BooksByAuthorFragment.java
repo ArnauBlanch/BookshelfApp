@@ -17,10 +17,8 @@ import com.mingo_blanch.pr_idi.bookshelf_app.SearchableList;
 import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by ivan on 29/12/2016.
@@ -28,10 +26,8 @@ import java.util.List;
 
 public class BooksByAuthorFragment extends Fragment implements UpdatableList, SearchableList {
     private BookData bookData;
-    private ArrayList<Book> booksList;
-    private HashMap<String, List<Book>> booksMap;
+    private TreeMap<String, ArrayList<Book>> books;
 
-    private RecyclerView mRecyclerView;
     private BooksByAuthorAdapter mAdapter;
     private List<ItemList> mItems;
 
@@ -48,14 +44,13 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
 
         bookData = new BookData(getActivity());
         bookData.open();
-        booksList = (ArrayList<Book>) bookData.getAllBooks();
-        mItems = new ArrayList<ItemList>();
+        mItems = new ArrayList<>();
 
         // Prepare the data for the adapter
         prepareList();
         mAdapter = new BooksByAuthorAdapter(mItems);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.books_by_author_rv);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.books_by_author_rv);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -70,16 +65,56 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
 
         mRecyclerView.setAdapter(mAdapter);
 
+        // Show the add fab button
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
+
         return view;
+    }
+
+    private void prepareList() {
+        books = bookData.getBooksByAuthor();
+        setmItems();
+    }
+
+    private void setmItems() {
+        mItems.clear();
+        for (String headerText : books.keySet()) {
+            ItemHeader header = new ItemHeader();
+            header.setText(headerText);
+            mItems.add(header);
+
+            boolean first = true;
+            int i = 1;
+            for (Book book : books.get(headerText)) {
+                ItemList item;
+                if (books.get(headerText).size() == 1) {
+                    // Alone item in section
+                    item = new ItemAlone();
+                } else if (i == books.get(headerText).size()) {
+                    // Last item in section
+                    item = new ItemBottom();
+                } else if (first) {
+                    // First item in section
+                    item = new ItemTop();
+                    first = false;
+                } else {
+                    // Middle item in section
+                    item = new ItemMiddle();
+                }
+                item.setBook(book);
+                mItems.add(item);
+                i++;
+            }
+        }
     }
 
     @Override
     public void filter(String text) {
         mItems.clear();
         text = text.toLowerCase();
-        for (String headerText : booksMap.keySet()) {
+        for (String headerText : books.keySet()) {
             ArrayList<Book> searchedBookList = new ArrayList<>();
-            for (Book b : booksMap.get(headerText)) {
+            for (Book b : books.get(headerText)) {
                 if (b.getTitle().toLowerCase().contains(text)) searchedBookList.add(b);
             }
             if (searchedBookList.size() > 0) {
@@ -114,73 +149,8 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
         mAdapter.notifyDataSetChanged();
     }
 
-    private void prepareList() {
-        sortBooksByTitle();
-        groupBooksByAuthor();
-        setmItems();
-    }
-
-    private void sortBooksByTitle() {
-        // Sort books list (booksList) by title
-        Collections.sort(booksList, new Comparator<Book>() {
-            public int compare (Book a, Book b) {
-                return a.getTitle().compareTo(b.getTitle());
-            }
-        });
-    }
-
-    private void groupBooksByAuthor() {
-        ArrayList<String> authorsList = new ArrayList<>();
-        booksMap = new HashMap<String, List<Book>> ();
-
-        for (Book a : booksList) {
-            if (!authorsList.contains(a.getAuthor())) {
-                authorsList.add(a.getAuthor());
-                ArrayList<Book> books = new ArrayList<>();
-                for (Book b : booksList) {
-                    if (b.getAuthor().equals(a.getAuthor()))
-                        books.add(b);
-                }
-                booksMap.put(a.getAuthor(), books);
-            }
-        }
-    }
-
-    private void setmItems() {
-        mItems.clear();
-        for (String headerText : booksMap.keySet()) {
-            ItemHeader header = new ItemHeader();
-            header.setText(headerText);
-            mItems.add(header);
-
-            boolean first = true;
-            int i = 1;
-            for (Book book : booksMap.get(headerText)) {
-                ItemList item;
-                if (booksMap.get(headerText).size() == 1) {
-                    // Alone item in section
-                    item = new ItemAlone();
-                } else if (i == booksMap.get(headerText).size()) {
-                    // Last item in section
-                    item = new ItemBottom();
-                } else if (first) {
-                    // First item in section
-                    item = new ItemTop();
-                    first = false;
-                } else {
-                    // Middle item in section
-                    item = new ItemMiddle();
-                }
-                item.setBook(book);
-                mItems.add(item);
-                i++;
-            }
-        }
-    }
-
     @Override
     public void updateList() {
-        booksList = (ArrayList<Book>) bookData.getAllBooks();
         prepareList();
         mAdapter.notifyDataSetChanged();
     }

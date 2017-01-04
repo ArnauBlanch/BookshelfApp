@@ -5,15 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import org.apache.http.entity.StringEntity;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -158,6 +152,25 @@ public class BookData {
         }
 
         return categories;
+    }
+
+    public TreeMap<String, ArrayList<Book>> getBooksByAuthor() {
+        TreeMap<String, ArrayList<Book>> authors = new TreeMap<>();
+
+        List<Book> books = getAllBooks();
+
+        for (Book book : books) {
+            if (!authors.containsKey(book.getAuthor()))
+                authors.put(book.getAuthor(), new ArrayList<Book>());
+
+            authors.get(book.getAuthor()).add(book);
+        }
+
+        for (TreeMap.Entry<String, ArrayList<Book>> e : authors.entrySet()) {
+            Collections.sort(e.getValue());
+        }
+
+        return authors;
     }
 
     private String[] getItemListByColumn(String column) {

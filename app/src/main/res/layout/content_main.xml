@@ -11,6 +11,9 @@
         android:id="@+id/content_main_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="56dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
 
 </RelativeLayout>

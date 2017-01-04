@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#fff"
     android:id="@+id/create_book_fragment"
     android:paddingTop="56dp"
-    tools:context="com.example.pr_idi.mydatabaseexample.MainActivity">
+    tools:context="com.mingo_blanch.pr_idi.bookshelf_app.MainActivity">
 <LinearLayout
     android:orientation="vertical"
     android:id="@+id/parentlayout"
@@ -69,14 +68,14 @@
             android:layout_width="match_parent"
             android:id="@+id/authorLayout"
             android:layout_height="60dp">
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/author"
+                android:inputType="textPhonetic"
                 android:maxLines="1"
-                android:inputType="text"
                 android:scrollHorizontally="true"
                 android:textSize="16sp"
                 />
@@ -137,14 +136,14 @@
             android:layout_width="match_parent"
             android:id="@+id/publisherLayout"
             android:layout_height="60dp">
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/publisher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/publisher"
                 android:maxLines="1"
-                android:inputType="text"
+                android:inputType="textPhonetic"
                 android:scrollHorizontally="true"
                 android:textSize="16sp"
                 />
@@ -171,14 +170,14 @@
             android:layout_width="match_parent"
             android:id="@+id/categoryLayout"
             android:layout_height="60dp">
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/category"
                 android:maxLines="1"
-                android:inputType="text"
+                android:inputType="textPhonetic"
                 android:scrollHorizontally="true"
                 android:textSize="16sp"
                 />
@@ -206,15 +205,17 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="vertical"
+            android:id="@+id/evalLayout"
             android:layout_marginLeft="0dp" >
             <TextView
                 android:id="@+id/evalLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pers_eval"
-                android:textColor="@color/accent_material_light"
+                android:textColor="@color/colorAccent"
                 android:textSize="12sp"
                 android:paddingLeft="4dp"
+                android:visibility="gone"
                 />
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/evaluation"
@@ -231,19 +232,5 @@
                 android:background="#000" />
         </LinearLayout>
     </LinearLayout>
-
-    <!--<android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/clayout">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/check" />
-    </android.support.design.widget.CoordinatorLayout>-->
 
 </LinearLayout></ScrollView>

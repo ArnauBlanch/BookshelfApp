@@ -5,12 +5,16 @@
         <menu>
             <item
                 android:id="@+id/nav_list_category"
-                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:icon="@drawable/category"
                 android:title="Llibres per categoria" />
             <item
                 android:id="@+id/nav_create_book"
-                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:icon="@drawable/add_box"
                 android:title="Afegeix nou llibre" />
+            <item
+                android:id="@+id/nav_delete_book"
+                android:icon="@drawable/delete"
+                android:title="Esborra llibre" />
         </menu>
     </item>
 

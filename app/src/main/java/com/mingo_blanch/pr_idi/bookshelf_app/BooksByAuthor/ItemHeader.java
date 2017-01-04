@@ -4,7 +4,7 @@ package com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor;
  * Created by ivan on 02/01/2017.
  */
 
-public class ItemHeader extends ItemList {
+class ItemHeader extends ItemList {
 
     private String text;
 

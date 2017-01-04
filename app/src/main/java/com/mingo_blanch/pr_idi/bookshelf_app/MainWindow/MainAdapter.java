@@ -1,6 +1,7 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.MainWindow;
 
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
             FragmentTransaction transaction = ((AppCompatActivity)view.getContext()).
                     getSupportFragmentManager().beginTransaction();
+            Fragment prev = ((AppCompatActivity)view.getContext()).getSupportFragmentManager()
+                    .findFragmentByTag("dialog");
+            if (prev != null) {
+                transaction.remove(prev);
+            }
             transaction.addToBackStack(null);
 
             // Create and show the dialog.

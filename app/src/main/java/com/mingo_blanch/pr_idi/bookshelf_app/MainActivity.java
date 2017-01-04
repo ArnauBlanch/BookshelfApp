@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity
     private Fragment mFragment;
     private SearchView mSearchView;
     private FragmentManager mFragmentManager;
-    private MenuItem mHomeItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity
             // If the fragment to show is the MainFragment
             //mSearchView.setQueryHint("Cercar títol...");
             mSearchView.setIconified(true);
-            mHomeItem.setVisible(false);
         }
         super.onBackPressed();
     }
@@ -143,8 +141,6 @@ public class MainActivity extends AppCompatActivity
         // Associate the item with the view
         MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
-
-        mHomeItem = menu.findItem(R.id.home);
 
         mSearchView.setQueryHint("Cercar títol...");
 
@@ -158,16 +154,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                switch (mFragment.getClass().getSimpleName()) {
-                    case "MainFragment" :
-                        ((MainFragment) mFragment).filter(newText);
-                        break;
-                    case "BooksByAuthorFragment" :
-                        ((BooksByAuthorFragment)mFragment).filter(newText);
-                        break;
-                    default :
-                        break;
-                }
+                ((SearchableList)mFragment).filter(newText);
                 return true;
             }
         });
@@ -183,11 +170,8 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.search :
-                mSearchView = (SearchView) item.getActionView();
                 mSearchView.setIconified(false);
                 return true;
-            case R.id.home :
-                replaceFragment(new MainFragment(), true, false);
             default :
                 return super.onOptionsItemSelected(item);
         }
@@ -197,16 +181,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_books_by_author :
-                replaceFragment(new BooksByAuthorFragment(), true, true);
+                replaceFragment(new BooksByAuthorFragment(), true);
                 break;
             case R.id.nav_home :
-                replaceFragment(new MainFragment(), true, false);
+                replaceFragment(new MainFragment(), true);
                 break;
             case R.id.nav_list_category:
-                replaceFragment(new BooksByCategoryFragment(), true, false);
+                replaceFragment(new BooksByCategoryFragment(), true);
                 break;
             case R.id.nav_create_book:
-                replaceFragment(new CreateBookFragment(), true, false);
+                replaceFragment(new CreateBookFragment(), true);
                 break;
             default :
                 break;
@@ -219,8 +203,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void replaceFragment(Fragment newFragment, boolean iconifiedSV,
-                                 boolean visibleHI) {
+    private void replaceFragment(Fragment newFragment, boolean iconifiedSV) {
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
@@ -234,8 +217,6 @@ public class MainActivity extends AppCompatActivity
 
         // Set the search item iconified
         mSearchView.setIconified(iconifiedSV);
-        // Set the home item visible
-        mHomeItem.setVisible(visibleHI);
     }
 
     @SuppressWarnings("unused")
@@ -287,12 +268,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onAddBook() {
-        replaceFragment(new CreateBookFragment(), true, false); // TODO: què són el 2n i 3r paràmetre?
+        replaceFragment(new CreateBookFragment(), true); // TODO: què són el 2n i 3r paràmetre?
     }
 
     @Override
     public void onBookCreated(final Book b) {
-        replaceFragment(new BooksByCategoryFragment(), true, false);
+        replaceFragment(new BooksByCategoryFragment(), true);
         showBookCreatedSnackbar(b);
     }
 

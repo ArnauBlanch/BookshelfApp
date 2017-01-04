@@ -9,11 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
+import com.mingo_blanch.pr_idi.bookshelf_app.SearchableList;
+import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,10 +24,11 @@ import java.util.Comparator;
  * Created by ivan on 29/12/2016.
  */
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements UpdatableList, SearchableList {
     private BookData bookData;
     private ArrayList<Book> booksList, booksCopy;
     private RecyclerView rv;
+    private MainAdapter mAdapter;
 
     public MainFragment (){}
 
@@ -34,10 +36,6 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Fes click sobre un llibre per modificar la seva valoració",
-                Toast.LENGTH_LONG).show();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.content_main, container, false);
@@ -62,11 +60,13 @@ public class MainFragment extends Fragment {
         rv.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter
-        updateAdapter();
+        mAdapter = new MainAdapter(booksList);
+        rv.setAdapter(mAdapter);
 
         return view;
     }
 
+    @Override
     public void filter(String text) {
         // Filter booksList with text
         if (!text.isEmpty()) {
@@ -79,9 +79,11 @@ public class MainFragment extends Fragment {
             }
         }
         else {
+            booksList.clear();
             booksList.addAll(booksCopy);
         }
-        updateAdapter();
+        sortBooksList();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void sortBooksList() {
@@ -93,8 +95,10 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void updateAdapter() {
+    @Override
+    public void updateList() {
+        booksList = (ArrayList<Book>) bookData.getAllBooks();
         sortBooksList();
-        rv.setAdapter(new MainAdapter(booksList));
+        mAdapter.notifyDataSetChanged();
     }
 }

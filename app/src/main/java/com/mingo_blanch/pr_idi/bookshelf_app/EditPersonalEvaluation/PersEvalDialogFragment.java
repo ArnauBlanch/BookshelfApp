@@ -10,7 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RadioGroup;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
@@ -56,10 +56,10 @@ public class PersEvalDialogFragment extends DialogFragment {
         bookData = new BookData(getActivity());
         bookData.open();
         List<Book> books = bookData.getAllBooks();
-        editText = (EditText) view.findViewById(R.id.pers_eval);
+        final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         for (Book a : books) {
             if (a.getId() == bookId) {
-                editText.setText(a.getPersonal_evaluation());
+                radioGroup.check(personalEvaluationToId(a.getPersonal_evaluation()));
                 builder.setTitle(a.getTitle() + " (" + a.getYear() + ")");
             }
         }
@@ -70,21 +70,48 @@ public class PersEvalDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Update the DB with the nuew personal evaluation for bookId
-                        bookData.updatePersonalEvaluation(bookId, editText.getText().toString());
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "S'ha modificat la valoració personal",
-                                Toast.LENGTH_SHORT).show();
+                        bookData.updatePersonalEvaluation(bookId,
+                                idToPersonalEvaluation(radioGroup.getCheckedRadioButtonId()));
+                        // TODO: show snackbar
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "No s'ha modificat la valoració personal",
-                                Toast.LENGTH_SHORT).show();
+
                     }
                 });
         return builder.create();
     }
 
+    private int personalEvaluationToId(String persEval){
+        switch (persEval) {
+            case "Very good" :
+                return R.id.radioButton;
+            case "Good" :
+                return R.id.radioButton2;
+            case "Bad" :
+                return R.id.radioButton4;
+            case "Very Bad" :
+                return R.id.radioButton5;
+            default :
+                return R.id.radioButton3;
+        }
+
+    }
+
+    private String idToPersonalEvaluation(int id) {
+        switch (id) {
+            case R.id.radioButton :
+                return "Very good";
+            case R.id.radioButton2 :
+                return "Good";
+            case R.id.radioButton4 :
+                return "Bad";
+            case R.id.radioButton5 :
+                return "Very Bad" ;
+            default :
+                return "Regular";
+        }
+    }
 
 }

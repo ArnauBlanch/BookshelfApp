@@ -7,16 +7,60 @@
     <TextView
         android:layout_marginStart="24dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/insert_pers_eval_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/pers_eval"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="16dp"
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:paddingStart="28dp"
+        android:paddingTop="10dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="VERY GOOD"
+            android:paddingStart="15dip"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton" />
+
+        <RadioButton
+            android:text="GOOD"
+            android:paddingStart="15dip"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton2" />
+
+        <RadioButton
+            android:text="REGULAR"
+            android:paddingStart="15dip"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton3" />
+
+        <RadioButton
+            android:text="BAD"
+            android:paddingStart="15dip"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton4" />
+
+        <RadioButton
+            android:text="VERY BAD"
+            android:paddingStart="15dip"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton5" />
+
+    </RadioGroup>
+
 
 </LinearLayout>

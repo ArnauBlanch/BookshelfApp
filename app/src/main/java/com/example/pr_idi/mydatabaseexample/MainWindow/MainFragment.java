@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.pr_idi.mydatabaseexample.Book;
 import com.example.pr_idi.mydatabaseexample.BookData;
@@ -27,6 +26,7 @@ public class MainFragment extends Fragment {
     private BookData bookData;
     private ArrayList<Book> booksList, booksCopy;
     private RecyclerView rv;
+    private MainAdapter mMainAdapter;
 
     public MainFragment (){}
 
@@ -34,10 +34,6 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Fes click sobre un llibre per modificar la seva valoració",
-                Toast.LENGTH_LONG).show();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.content_main, container, false);
@@ -62,7 +58,10 @@ public class MainFragment extends Fragment {
         rv.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter
-        updateAdapter();
+        mMainAdapter = new MainAdapter(booksList);
+        rv.setAdapter(mMainAdapter);
+
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -94,7 +93,13 @@ public class MainFragment extends Fragment {
     }
 
     private void updateAdapter() {
+        mMainAdapter = new MainAdapter(booksList);
+        rv.setAdapter(mMainAdapter);
+    }
+
+    public void updateBooks() {
+        booksList = (ArrayList<Book>) bookData.getAllBooks();
         sortBooksList();
-        rv.setAdapter(new MainAdapter(booksList));
+        mMainAdapter.notifyDataSetChanged();
     }
 }

@@ -27,7 +27,6 @@ import java.util.List;
 public class BooksByAuthorFragment extends Fragment {
     private BookData bookData;
     private ArrayList<Book> booksList;
-    private ArrayList<String> authorsList;
     private HashMap<String, List<Book>> booksMap;
 
     private RecyclerView mRecyclerView;
@@ -49,57 +48,9 @@ public class BooksByAuthorFragment extends Fragment {
         bookData.open();
         booksList = (ArrayList<Book>) bookData.getAllBooks();
 
-        // Sort books list (booksList) by title
-        Collections.sort(booksList, new Comparator<Book>() {
-            public int compare (Book a, Book b) {
-                return a.getTitle().compareTo(b.getTitle());
-            }
-        });
-
-        authorsList = new ArrayList<>();
-        booksMap = new HashMap<String, List<Book>> ();
-
-        for (Book a : booksList) {
-            if (!authorsList.contains(a.getAuthor())) {
-                authorsList.add(a.getAuthor());
-                ArrayList<Book> books = new ArrayList<>();
-                for (Book b : booksList) {
-                    if (b.getAuthor().equals(a.getAuthor()))
-                        books.add(b);
-                }
-                booksMap.put(a.getAuthor(), books);
-            }
-        }
-
-        mItems = new ArrayList<>();
-        for (String headerText : booksMap.keySet()) {
-            ItemHeader header = new ItemHeader();
-            header.setText(headerText);
-            mItems.add(header);
-
-            boolean first = true;
-            int i = 1;
-            for (Book book : booksMap.get(headerText)) {
-                ItemList item;
-                if (booksMap.get(headerText).size() == 1) {
-                    // Alone item in section
-                    item = new ItemAlone();
-                } else if (i == booksMap.get(headerText).size()) {
-                    // Last item in section
-                    item = new ItemBottom();
-                } else if (first) {
-                    // First item in section
-                    item = new ItemTop();
-                    first = false;
-                } else {
-                    // Middle item in section
-                    item = new ItemMiddle();
-                }
-                item.setBook(book);
-                mItems.add(item);
-                i++;
-            }
-        }
+        sortBooksByTitle();
+        groupBooksByAuthor();
+        setmItems();
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.books_by_author_rv);
 
@@ -164,5 +115,71 @@ public class BooksByAuthorFragment extends Fragment {
     private void updateAdapter() {
         mAdapter = new BooksByAuthorAdapter(mItems);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void updateBooks() {
+        booksList = (ArrayList<Book>) bookData.getAllBooks();
+        sortBooksByTitle();
+        groupBooksByAuthor();
+        setmItems();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void sortBooksByTitle() {
+        // Sort books list (booksList) by title
+        Collections.sort(booksList, new Comparator<Book>() {
+            public int compare (Book a, Book b) {
+                return a.getTitle().compareTo(b.getTitle());
+            }
+        });
+    }
+
+    private void groupBooksByAuthor() {
+        ArrayList<String> authorsList = new ArrayList<>();
+        booksMap = new HashMap<String, List<Book>> ();
+
+        for (Book a : booksList) {
+            if (!authorsList.contains(a.getAuthor())) {
+                authorsList.add(a.getAuthor());
+                ArrayList<Book> books = new ArrayList<>();
+                for (Book b : booksList) {
+                    if (b.getAuthor().equals(a.getAuthor()))
+                        books.add(b);
+                }
+                booksMap.put(a.getAuthor(), books);
+            }
+        }
+    }
+
+    private void setmItems() {
+        mItems = new ArrayList<>();
+        for (String headerText : booksMap.keySet()) {
+            ItemHeader header = new ItemHeader();
+            header.setText(headerText);
+            mItems.add(header);
+
+            boolean first = true;
+            int i = 1;
+            for (Book book : booksMap.get(headerText)) {
+                ItemList item;
+                if (booksMap.get(headerText).size() == 1) {
+                    // Alone item in section
+                    item = new ItemAlone();
+                } else if (i == booksMap.get(headerText).size()) {
+                    // Last item in section
+                    item = new ItemBottom();
+                } else if (first) {
+                    // First item in section
+                    item = new ItemTop();
+                    first = false;
+                } else {
+                    // Middle item in section
+                    item = new ItemMiddle();
+                }
+                item.setBook(book);
+                mItems.add(item);
+                i++;
+            }
+        }
     }
 }

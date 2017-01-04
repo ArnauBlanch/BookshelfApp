@@ -1,4 +1,4 @@
-﻿package com.example.pr_idi.mydatabaseexample;
+package com.example.pr_idi.mydatabaseexample;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +25,6 @@ import com.example.pr_idi.mydatabaseexample.BooksByCategory.ListCategoryFragment
 import com.example.pr_idi.mydatabaseexample.CreateBook.CreateBookFragment;
 import com.example.pr_idi.mydatabaseexample.MainWindow.MainFragment;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ListCategoryFragment.ListCategoryFragmentListener, CreateBookFragment.CreateBookFragmentListener {
 
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity
     private Fragment mFragment;
     private SearchView mSearchView;
     private FragmentManager mFragmentManager;
-    private MenuItem mHomeItem;
     private NavigationView mNavigationView;
 
     @Override
@@ -129,7 +127,6 @@ public class MainActivity extends AppCompatActivity
             // If the fragment to show is the MainFragment
             //mSearchView.setQueryHint("Cercar títol...");
             mSearchView.setIconified(true);
-            mHomeItem.setVisible(false);
         }
         super.onBackPressed();
     }
@@ -141,8 +138,6 @@ public class MainActivity extends AppCompatActivity
         // Associate the item with the view
         MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
-
-        mHomeItem = menu.findItem(R.id.home);
 
         mSearchView.setQueryHint("Cercar títol...");
 
@@ -185,7 +180,7 @@ public class MainActivity extends AppCompatActivity
                 mSearchView.setIconified(false);
                 return true;
             case R.id.home :
-                replaceFragment(new MainFragment(), true, false);
+                replaceFragment(new MainFragment(), true);
             default :
                 return super.onOptionsItemSelected(item);
         }
@@ -195,16 +190,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_books_by_author :
-                replaceFragment(new BooksByAuthorFragment(), true, true);
+                replaceFragment(new BooksByAuthorFragment(), true);
                 break;
             case R.id.nav_home :
-                replaceFragment(new MainFragment(), true, false);
+                replaceFragment(new MainFragment(), true);
                 break;
             case R.id.nav_list_category:
-                replaceFragment(new ListCategoryFragment(), true, true);
+                replaceFragment(new ListCategoryFragment(), true);
                 break;
             case R.id.create_book_fragment:
-                replaceFragment(new CreateBookFragment(), true, true);
+                replaceFragment(new CreateBookFragment(), true);
                 break;
             default :
                 break;
@@ -220,10 +215,8 @@ public class MainActivity extends AppCompatActivity
     /**
      * @param newFragment fragment that replace the actual fragment
      * @param iconifiedSV collapse (true) or expande (false) the search button
-     * @param visibleHI set the toolbar home button visible (true) or not (false)
      */
-    private void replaceFragment(Fragment newFragment, boolean iconifiedSV,
-                                 boolean visibleHI) {
+    private void replaceFragment(Fragment newFragment, boolean iconifiedSV) {
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
@@ -237,8 +230,6 @@ public class MainActivity extends AppCompatActivity
 
         // Set the search item iconified
         mSearchView.setIconified(iconifiedSV);
-        // Set the home item visible
-        mHomeItem.setVisible(visibleHI);
     }
 
     private void setDataBase() {
@@ -261,7 +252,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddBook() {
-        replaceFragment(new CreateBookFragment(), true, false); // TODO: què són el 2n i 3r paràmetre?
+        replaceFragment(new CreateBookFragment(), true); // TODO: què són el 2n i 3r paràmetre?
     }
 
 
@@ -295,14 +286,27 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBookCreated(final Book b) {
-        replaceFragment(new ListCategoryFragment(), true, false); // TODO: què són el 2n i 3r paràmetre?
+        Log.d("DEBUG", "mFragment = " + mFragment.getClass().getSimpleName());
+        replaceFragment(new ListCategoryFragment(), true); // TODO: què són el 2n i 3r paràmetre?
         showBookCreatedSnackbar(b);
         // TODO: snackbar informatiu + adaptar segons fragment previ a la creació
     }
 
     public void onBookDeleteConfirmed(Book b) {
         bookData.deleteBookById(b.getId());
-        ((ListCategoryFragment)mFragment).updateBooks();
+        switch (mFragment.getClass().getSimpleName()) {
+            case "MainFragment" :
+                ((MainFragment) mFragment).updateBooks();
+                break;
+            case "BooksByAuthorFragment" :
+                ((BooksByAuthorFragment)mFragment).updateBooks();
+                break;
+            case "ListCategoryFragment" :
+                ((ListCategoryFragment)mFragment).updateBooks();
+                Log.d("DEBUG", "mFragment = " + mFragment.getClass().getSimpleName());
+            default :
+                break;
+        }
         showBookDeletedSnackbar(b);
     }
 }

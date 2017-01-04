@@ -82,28 +82,10 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
             ItemHeader header = new ItemHeader();
             header.setText(headerText);
             mItems.add(header);
-
-            boolean first = true;
-            int i = 1;
             for (Book book : books.get(headerText)) {
-                ItemList item;
-                if (books.get(headerText).size() == 1) {
-                    // Alone item in section
-                    item = new ItemAlone();
-                } else if (i == books.get(headerText).size()) {
-                    // Last item in section
-                    item = new ItemBottom();
-                } else if (first) {
-                    // First item in section
-                    item = new ItemTop();
-                    first = false;
-                } else {
-                    // Middle item in section
-                    item = new ItemMiddle();
-                }
+                ItemBook item = new ItemBook();
                 item.setBook(book);
                 mItems.add(item);
-                i++;
             }
         }
     }
@@ -121,28 +103,10 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
                 ItemHeader header = new ItemHeader();
                 header.setText(headerText);
                 mItems.add(header);
-
-                boolean first = true;
-                int i = 1;
                 for (Book book : searchedBookList) {
-                    ItemList item;
-                    if (searchedBookList.size() == 1) {
-                        // Alone item in section
-                        item = new ItemAlone();
-                    } else if (i == searchedBookList.size()) {
-                        // Last item in section
-                        item = new ItemBottom();
-                    } else if (first) {
-                        // First item in section
-                        item = new ItemTop();
-                        first = false;
-                    } else {
-                        // Middle item in section
-                        item = new ItemMiddle();
-                    }
+                    ItemBook item = new ItemBook();
                     item.setBook(book);
                     mItems.add(item);
-                    i++;
                 }
             }
         }

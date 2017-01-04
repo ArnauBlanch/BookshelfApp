@@ -1,6 +1,7 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor;
 
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            text = (TextView) itemView.findViewById(R.id.text_header);
+            text = (TextView) itemView.findViewById(R.id.category_header);
         }
 
         public void setText(String text) { this.text.setText(text); }
@@ -47,10 +48,11 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            itemView.setClickable(true);
             itemView.setOnClickListener(this);
-            title = (TextView) itemView.findViewById(R.id.card_book_title);
-            category = (TextView) itemView.findViewById(R.id.card_book_category);
-            year = (TextView) itemView.findViewById(R.id.card_book_year);
+            title = (TextView) itemView.findViewById(R.id.book_title);
+            category = (TextView) itemView.findViewById(R.id.book_author);
+            year = (TextView) itemView.findViewById(R.id.book_year);
         }
 
         public void setTitle(String text) { this.title.setText(text); }
@@ -64,6 +66,11 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             FragmentTransaction transaction = ((AppCompatActivity)view.getContext()).
                     getSupportFragmentManager().beginTransaction();
+            Fragment prev = ((AppCompatActivity)view.getContext()).getSupportFragmentManager()
+                    .findFragmentByTag("dialog");
+            if (prev != null) {
+                transaction.remove(prev);
+            }
             transaction.addToBackStack(null);
 
             // Create and show the dialog.
@@ -77,20 +84,11 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
         View itemView;
         if (viewType == ItemList.TYPE_HEADER) {
             itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_list_item_header, parent, false);
+                    .inflate(R.layout.category, parent, false);
             return new HeaderViewHolder(itemView);
-        } else if (viewType == ItemList.TYPE_TOP) {
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_list_item_top, parent, false);
-        } else if (viewType == ItemList.TYPE_MIDDLE) {
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_list_item_middle, parent, false);
-        } else if (viewType == ItemList.TYPE_BOTTOM){
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_list_item_bottom, parent, false);
         } else {
             itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_list_item_alone, parent, false);
+                    .inflate(R.layout.book_rv_item, parent, false);
         }
         return new ItemViewHolder(itemView);
     }
@@ -101,17 +99,8 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (type == ItemList.TYPE_HEADER) {
             ItemHeader header = (ItemHeader) mItems.get(position);
             ((HeaderViewHolder)holder).setText(header.getText());
-        } else if (type == ItemList.TYPE_TOP) {
-            ItemTop item = (ItemTop) mItems.get(position);
-            setViewHolderAttr((ItemViewHolder)holder, item.getBook());
-        } else if (type == ItemList.TYPE_MIDDLE) {
-            ItemMiddle item = (ItemMiddle) mItems.get(position);
-            setViewHolderAttr((ItemViewHolder)holder, item.getBook());
-        } else if (type == ItemList.TYPE_BOTTOM){
-            ItemBottom item = (ItemBottom) mItems.get(position);
-            setViewHolderAttr((ItemViewHolder)holder, item.getBook());
         } else {
-            ItemAlone item = (ItemAlone) mItems.get(position);
+            ItemBook item = (ItemBook) mItems.get(position);
             setViewHolderAttr((ItemViewHolder)holder, item.getBook());
         }
     }

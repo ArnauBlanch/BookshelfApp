@@ -1,9 +1,5 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
-import com.mingo_blanch.pr_idi.bookshelf_app.DeleteBook.DeleteDialogFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.OptionsAlertDialog.OptionsAlertDialog;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 
 import java.util.List;
@@ -117,18 +113,8 @@ class BookByCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @Override
         public boolean onLongClick(View v) {
-            ((AppCompatActivity)v.getContext()).getSupportFragmentManager();
-
-            FragmentTransaction ft = ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction();
-            Fragment prev = ((AppCompatActivity)v.getContext()).getSupportFragmentManager().findFragmentByTag("dialog");
-            if (prev != null) {
-                ft.remove(prev);
-            }
-            ft.addToBackStack(null);
-
-            // Create and show the dialog.
-            DialogFragment newFragment = DeleteDialogFragment.newInstance(id);
-            newFragment.show(ft, "dialog");
+            OptionsAlertDialog dialog = new OptionsAlertDialog(v.getContext(), id);
+            dialog.showBuilder();
             return true;
         }
     }

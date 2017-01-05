@@ -1,6 +1,7 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -25,6 +26,12 @@ import java.util.List;
 public class PersEvalDialogFragment extends DialogFragment {
 
     private long bookId;
+    private String persEval;
+    private PersEvalDialogFragment.PersEvalListener listener;
+
+    public interface PersEvalListener {
+        void onEditPersEvalConfirmed(final Book book, String persEval);
+    }
 
     public static PersEvalDialogFragment newInstance(long bookId) {
         PersEvalDialogFragment pedf = new PersEvalDialogFragment();
@@ -57,12 +64,18 @@ public class PersEvalDialogFragment extends DialogFragment {
         bookData.open();
         List<Book> books = bookData.getAllBooks();
         final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        for (Book a : books) {
-            if (a.getId() == bookId) {
-                radioGroup.check(personalEvaluationToId(a.getPersonal_evaluation()));
-                builder.setTitle(a.getTitle() + " (" + a.getYear() + ")");
+        Book book = new Book();
+        boolean found = false;
+        for (int i = 0; i < books.size() && !found; i++) {
+            book = books.get(i);
+            if (book.getId() == bookId) {
+                found = true;
+                persEval = book.getPersonal_evaluation();
+                radioGroup.check(personalEvaluationToId(persEval));
+                builder.setTitle(book.getTitle() + " (" + book.getYear() + ")");
             }
         }
+        final Book a = book;
 
         builder.setView(view)
                 // Add action buttons
@@ -70,9 +83,10 @@ public class PersEvalDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Update the DB with the nuew personal evaluation for bookId
-                        bookData.updatePersonalEvaluation(bookId,
-                                idToPersonalEvaluation(radioGroup.getCheckedRadioButtonId()));
-                        // TODO: show snackbar
+                        String newPersEval = idToPersonalEvaluation(radioGroup.getCheckedRadioButtonId());
+                        bookData.updatePersonalEvaluation(bookId, newPersEval);
+                        a.setPersonal_evaluation(newPersEval);
+                        listener.onEditPersEvalConfirmed(a, persEval);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -112,6 +126,18 @@ public class PersEvalDialogFragment extends DialogFragment {
             default :
                 return "Regular";
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        listener = (PersEvalDialogFragment.PersEvalListener) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
 }

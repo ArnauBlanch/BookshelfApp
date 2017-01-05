@@ -26,6 +26,7 @@ import com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor.BooksByAuthorFragment
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BooksByCategoryFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.CreateBook.CreateBookFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.DeleteBook.DeleteDialogFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainWindow.MainFragment;
 
 import java.util.Objects;
@@ -33,7 +34,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
             CreateBookFragment.CreateBookFragmentListener,
-            DeleteDialogFragment.DeleteBookListener {
+            DeleteDialogFragment.DeleteBookListener, PersEvalDialogFragment.PersEvalListener {
 
     private BookData bookData;
     private Fragment mFragment;
@@ -275,6 +276,20 @@ public class MainActivity extends AppCompatActivity
                 .show();
     }
 
+    private void showPersEvalEditedSnackbar(final Book b, final String persEval) {
+        Snackbar.make(findViewById(R.id.clayout), "Your personal evaluation for the book '"+b.getTitle()+"' " + "is: " + b.getPersonal_evaluation(), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.UNDO), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bookData.updatePersonalEvaluation(b.getId(), persEval);
+                        ((UpdatableList)mFragment).updateList();
+                        Snackbar snackbar1 = Snackbar.make(findViewById(R.id.clayout), "All changes were undone", Snackbar.LENGTH_LONG);
+                        snackbar1.show();
+                    }
+                })
+                .show();
+    }
+
     private void onAddBook() {
         replaceFragment(new CreateBookFragment());
         addingBook = true;
@@ -292,5 +307,11 @@ public class MainActivity extends AppCompatActivity
         bookData.deleteBookById(b.getId());
         ((UpdatableList)mFragment).updateList();
         showBookDeletedSnackbar(b);
+    }
+
+    @Override
+    public void onEditPersEvalConfirmed(Book book, String persEval) {
+        ((UpdatableList)mFragment).updateList();
+        showPersEvalEditedSnackbar(book, persEval);
     }
 }

@@ -71,7 +71,7 @@ public class Book implements Comparable<Book> {
         return personal_evaluation;
     }
 
-    void setPersonal_evaluation(String personal_evaluation) {
+    public void setPersonal_evaluation(String personal_evaluation) {
         this.personal_evaluation = personal_evaluation;
     }
 

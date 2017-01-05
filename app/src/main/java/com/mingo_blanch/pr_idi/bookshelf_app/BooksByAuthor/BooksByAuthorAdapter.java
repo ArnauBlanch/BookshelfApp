@@ -1,9 +1,5 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
-import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.OptionsAlertDialog.OptionsAlertDialog;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 
 import java.util.List;
@@ -41,15 +37,15 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder
-                                        implements View.OnClickListener {
+                                        implements View.OnLongClickListener {
 
         private TextView title, category, year;
         private Long id;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            itemView.setClickable(true);
-            itemView.setOnClickListener(this);
+            itemView.setLongClickable(true);
+            itemView.setOnLongClickListener(this);
             title = (TextView) itemView.findViewById(R.id.book_title);
             category = (TextView) itemView.findViewById(R.id.book_author);
             year = (TextView) itemView.findViewById(R.id.book_year);
@@ -61,21 +57,10 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
         public void setId(Long id) { this.id = id; }
 
         @Override
-        public void onClick(View view) {
-            ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
-
-            FragmentTransaction transaction = ((AppCompatActivity)view.getContext()).
-                    getSupportFragmentManager().beginTransaction();
-            Fragment prev = ((AppCompatActivity)view.getContext()).getSupportFragmentManager()
-                    .findFragmentByTag("dialog");
-            if (prev != null) {
-                transaction.remove(prev);
-            }
-            transaction.addToBackStack(null);
-
-            // Create and show the dialog.
-            DialogFragment newFragment = PersEvalDialogFragment.newInstance(id);
-            newFragment.show(transaction, "dialog");
+        public boolean onLongClick(View view) {
+            OptionsAlertDialog dialog = new OptionsAlertDialog(view.getContext(), id);
+            dialog.showBuilder();
+            return true;
         }
     }
 

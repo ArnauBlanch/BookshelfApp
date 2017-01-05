@@ -1,9 +1,5 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.MainWindow;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
-import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.OptionsAlertDialog.OptionsAlertDialog;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 
 import java.util.ArrayList;
@@ -28,35 +24,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
-                                    implements View.OnClickListener {
+                                    implements View.OnLongClickListener {
 
         private TextView title, author, year;
         private Long id;
 
         public ViewHolder(View view) {
             super(view);
-            view.setOnClickListener(this);
+            view.setLongClickable(true);
+            view.setOnLongClickListener(this);
             title  = (TextView) view.findViewById(R.id.book_title);
             author = (TextView) view.findViewById(R.id.book_author);
             year   = (TextView) view.findViewById(R.id.book_year);
-        }
-
-        @Override
-        public void onClick(View view) {
-            ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
-
-            FragmentTransaction transaction = ((AppCompatActivity)view.getContext()).
-                    getSupportFragmentManager().beginTransaction();
-            Fragment prev = ((AppCompatActivity)view.getContext()).getSupportFragmentManager()
-                    .findFragmentByTag("dialog");
-            if (prev != null) {
-                transaction.remove(prev);
-            }
-            transaction.addToBackStack(null);
-
-            // Create and show the dialog.
-            DialogFragment newFragment = PersEvalDialogFragment.newInstance(id);
-            newFragment.show(transaction, "dialog");
         }
 
         public void setTitle(String title) { this.title.setText(title); }
@@ -66,6 +45,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public void setYear(Integer year) { this.year.setText(String.valueOf(year)); }
 
         public void setId(Long id) { this.id = id; }
+
+        @Override
+        public boolean onLongClick(final View view) {
+            OptionsAlertDialog dialog = new OptionsAlertDialog(view.getContext(), id);
+            dialog.showBuilder();
+            return true;
+        }
     }
 
     @Override

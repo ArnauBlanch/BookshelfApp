@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
+import com.mingo_blanch.pr_idi.bookshelf_app.MainActivity;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
 
@@ -43,6 +44,9 @@ public class BooksByCategoryFragment extends Fragment implements UpdatableList {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
+
+        // Set action bar title
+        ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.books_by_category_app_bar_title));
 
         return view;
     }

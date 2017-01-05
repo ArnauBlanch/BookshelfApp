@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">BookShelf App</string>
+    <string name="books_by_author_app_bar_title">Books by author</string>
+    <string name="books_by_category_app_bar_title">Books by category</string>
+    <string name="create_book_app_bar_title">Create book</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_books">There are no books</string>

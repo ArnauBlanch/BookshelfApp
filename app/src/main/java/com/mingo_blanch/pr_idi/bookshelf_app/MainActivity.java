@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     private Fragment mBackFragment;
     private SearchView mSearchView;
     private boolean addingBook;
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,15 +77,15 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         // Navigation Drawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -131,8 +133,8 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return;
         } else if (addingBook) {
-            replaceFragment(mBackFragment);
             addingBook = false;
+            replaceFragment(mBackFragment);
             return;
         } else if (!Objects.equals(mFragment.getClass().getSimpleName(), "MainFragment")){
             mFragment = new MainFragment();
@@ -224,6 +226,15 @@ public class MainActivity extends AppCompatActivity
         // Update global variable
         mFragment = newFragment;
 
+        // Set the navigation icon
+        /*
+        if (addingBook) {
+            setCreateBookActionBar();
+        } else {
+            setMainActionBar();
+        }
+        */
+
         // Set the search item iconified
         mSearchView.setIconified(true);
     }
@@ -291,8 +302,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onAddBook() {
-        replaceFragment(new CreateBookFragment());
         addingBook = true;
+        replaceFragment(new CreateBookFragment());
     }
 
     @Override
@@ -313,5 +324,37 @@ public class MainActivity extends AppCompatActivity
     public void onEditPersEvalConfirmed(Book book, String persEval) {
         ((UpdatableList)mFragment).updateList();
         showPersEvalEditedSnackbar(book, persEval);
+    }
+
+    public void setActionBarTitle(String title) {
+        mToolbar.setTitle(title);
+    }
+
+    private void setCreateBookActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        mSearchView.setVisibility(View.GONE);
+    }
+
+    private void setMainActionBar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        mSearchView.setVisibility(View.VISIBLE);
     }
 }

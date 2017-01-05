@@ -23,9 +23,8 @@ import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
+import com.mingo_blanch.pr_idi.bookshelf_app.MainActivity;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
-
-import org.w3c.dom.Text;
 
 public class CreateBookFragment extends Fragment {
 
@@ -127,6 +126,9 @@ public class CreateBookFragment extends Fragment {
 
 
         getActivity().findViewById(R.id.fab_btn_creation_done).setVisibility(View.VISIBLE);
+
+        // Set action bar title
+        ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.create_book_app_bar_title));
 
         // TODO: Refactor + acabar part de gestió d'errors + 'unknown'/'desconengut'
         return view;

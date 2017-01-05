@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
+import com.mingo_blanch.pr_idi.bookshelf_app.MainActivity;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 import com.mingo_blanch.pr_idi.bookshelf_app.SearchableList;
 import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
@@ -66,6 +67,9 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
 
         // Show the add fab button
         getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
+
+        // Set action bar title
+        ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.app_name));
 
         return view;
     }

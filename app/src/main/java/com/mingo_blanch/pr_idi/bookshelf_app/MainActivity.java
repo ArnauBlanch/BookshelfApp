@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -132,7 +133,12 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             return;
-        } else if (addingBook) {
+        }
+        else if (!mSearchView.isIconified()) {
+            Log.v("test", "ieep");
+            mSearchView.setIconified(true);
+        }
+        else if (addingBook) {
             addingBook = false;
             replaceFragment(mBackFragment);
             return;
@@ -141,19 +147,20 @@ public class MainActivity extends AppCompatActivity
             replaceFragment(mFragment);
             return;
         }
-        super.onBackPressed();
+        else
+            super.onBackPressed();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present
         getMenuInflater().inflate(R.menu.options_menu, menu);
+
         // Associate the item with the view
         MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
 
-        mSearchView.setQueryHint(getString(R.string.search_title)+"...");
-
+        //mSearchView.setQueryHint(getString(R.string.search_title)+"...");
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +82,6 @@ public class CreateBookFragment extends Fragment {
         parentLayout = (LinearLayout) view.findViewById(R.id.parentlayout);
         setupUI(parentLayout);
 
-        final LinearLayout evalLayout = (LinearLayout) view.findViewById(R.id.evalLayout);
-
         final TextView evalLabel = (TextView) view.findViewById(R.id.evalLabel);
         persEvalSpinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -132,6 +131,12 @@ public class CreateBookFragment extends Fragment {
 
         // TODO: Refactor + acabar part de gestió d'errors + 'unknown'/'desconengut'
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.search).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 
     private void prepareAutoCompleteSuggestions() {
@@ -323,4 +328,5 @@ public class CreateBookFragment extends Fragment {
         super.onDetach();
         listener = null;
     }
+
 }

@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_create_book:
                 replaceFragment(new CreateBookFragment());
                 break;
+            case R.id.nav_about:
+                replaceFragment(new AboutFragment());
             default :
                 break;
         }

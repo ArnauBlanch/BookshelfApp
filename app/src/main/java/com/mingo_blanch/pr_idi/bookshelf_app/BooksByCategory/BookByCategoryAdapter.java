@@ -10,16 +10,20 @@ import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.OptionsAlertDialog.OptionsAlertDialog;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import static com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BookCategoryItem.BOOK_TYPE;
 import static com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BookCategoryItem.CATEGORY_TYPE;
 
 class BookByCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private TreeMap<String, ArrayList<Book>> booksByCategory;
     private List<BookCategoryItem> mList;
 
-    BookByCategoryAdapter(List<BookCategoryItem> list) {
-        this.mList = list;
+    BookByCategoryAdapter(TreeMap<String, ArrayList<Book>> booksByCategory) {
+        this.booksByCategory = booksByCategory;
+        this.mList = getAndPrepareBooksByCategory();
     }
 
     @Override
@@ -67,6 +71,27 @@ class BookByCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
         return 0;
+    }
+
+    public void filter(String text) {
+        mList.clear();
+        text = text.toLowerCase();
+        for (String category : booksByCategory.keySet()) {
+            ArrayList<Book> searchedBookList = new ArrayList<>();
+            for (Book b : booksByCategory.get(category)) {
+                if (b.getTitle().toLowerCase().contains(text)) searchedBookList.add(b);
+            }
+            if (searchedBookList.size() > 0) {
+                BookCategoryItem categoryItem = new BookCategoryItem(category, null, CATEGORY_TYPE);
+                mList.add(categoryItem);
+                for (Book book : searchedBookList) {
+                    BookCategoryItem bookItem = new BookCategoryItem(null, book, BOOK_TYPE);
+                    mList.add(bookItem);
+                }
+            }
+        }
+        notifyDataSetChanged();
+
     }
 
     private static class CategoryViewHolder extends RecyclerView.ViewHolder {
@@ -118,7 +143,27 @@ class BookByCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return true;
         }
     }
-    public void setList(List<BookCategoryItem> newList) {
-        this.mList = newList;
+    public void updateList(TreeMap<String, ArrayList<Book>> booksByCategory) {
+        this.booksByCategory = booksByCategory;
+        this.mList = getAndPrepareBooksByCategory();
+        notifyDataSetChanged();
+    }
+
+
+    private List<BookCategoryItem> getAndPrepareBooksByCategory() {
+        List<BookCategoryItem> items = new ArrayList<>();
+
+        for (TreeMap.Entry<String, ArrayList<Book>> category : booksByCategory.entrySet()) {
+            items.add(new BookCategoryItem(category.getKey(), null, BookCategoryItem.CATEGORY_TYPE));
+
+            ArrayList<Book> booksInCategory = category.getValue();
+
+            for (Book book : booksInCategory) {
+                items.add(new BookCategoryItem(null, book, BookCategoryItem.BOOK_TYPE));
+            }
+
+        }
+
+        return items;
     }
 }

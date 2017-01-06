@@ -14,17 +14,17 @@ import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainActivity;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
+import com.mingo_blanch.pr_idi.bookshelf_app.SearchableList;
 import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class BooksByCategoryFragment extends Fragment implements UpdatableList {
+public class BooksByCategoryFragment extends Fragment implements UpdatableList, SearchableList {
 
     private BookData bookData;
     private BookByCategoryAdapter mAdapter;
-    private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public class BooksByCategoryFragment extends Fragment implements UpdatableList {
 
         ///////////////
 
-        mAdapter = new BookByCategoryAdapter(getAndPrepareBooksByCategory());
+        mAdapter = new BookByCategoryAdapter(bookData.getBooksByCategory());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
@@ -51,25 +51,6 @@ public class BooksByCategoryFragment extends Fragment implements UpdatableList {
         return view;
     }
 
-    private List<BookCategoryItem> getAndPrepareBooksByCategory() {
-        TreeMap<String, ArrayList<Book>> list = bookData.getBooksByCategory();
-
-        List<BookCategoryItem> items = new ArrayList<>();
-
-        for (TreeMap.Entry<String, ArrayList<Book>> category : list.entrySet()) {
-            items.add(new BookCategoryItem(category.getKey(), null, BookCategoryItem.CATEGORY_TYPE));
-
-            ArrayList<Book> booksInCategory = category.getValue();
-
-            for (Book book : booksInCategory) {
-                items.add(new BookCategoryItem(null, book, BookCategoryItem.BOOK_TYPE));
-            }
-
-        }
-
-        return items;
-    }
-
     @Override
     public void onDestroyView() {
         getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.GONE);
@@ -78,9 +59,12 @@ public class BooksByCategoryFragment extends Fragment implements UpdatableList {
 
     @Override
     public void updateList() {
-        mAdapter.setList(getAndPrepareBooksByCategory());
-        mAdapter.notifyDataSetChanged();
+        mAdapter.updateList(bookData.getBooksByCategory());
     }
 
 
+    @Override
+    public void filter(String text) {
+        mAdapter.filter(text);
+    }
 }

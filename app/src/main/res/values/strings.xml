@@ -46,7 +46,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="search_title">Search</string>
+    <string name="search_title">Cerca títol</string>
 
     <string name="home_title">Home</string>
 
@@ -57,4 +57,7 @@
     <string name="was_deleted">was deleted</string>
     <string name="UNDO">UNDO</string>
     <string name="was_created">was created</string>
+    <string name="changes_undone">All changes were undone</string>
+    <string name="your_pers_eval_for_book">Your personal evaluation for the book</string>
+    <string name="is">is</string>
 </resources>

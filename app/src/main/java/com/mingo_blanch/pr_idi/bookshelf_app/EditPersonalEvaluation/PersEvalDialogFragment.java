@@ -98,33 +98,30 @@ public class PersEvalDialogFragment extends DialogFragment {
     }
 
     private int personalEvaluationToId(String persEval){
-        switch (persEval) {
-            case "Very good" :
-                return R.id.radioButton;
-            case "Good" :
-                return R.id.radioButton2;
-            case "Bad" :
-                return R.id.radioButton4;
-            case "Very Bad" :
-                return R.id.radioButton5;
-            default :
-                return R.id.radioButton3;
-        }
-
+        if (persEval.equals(getString(R.string.very_good)))
+            return R.id.radioButton;
+        else if (persEval.equals(getString(R.string.good)))
+            return R.id.radioButton2;
+        else if (persEval.equals(getString(R.string.regular)))
+            return R.id.radioButton3;
+        else if (persEval.equals(getString(R.string.bad)))
+            return R.id.radioButton4;
+        else
+            return R.id.radioButton5;
     }
 
     private String idToPersonalEvaluation(int id) {
         switch (id) {
             case R.id.radioButton :
-                return "Very good";
+                return getString(R.string.very_good);
             case R.id.radioButton2 :
-                return "Good";
+                return getString(R.string.good);
             case R.id.radioButton4 :
-                return "Bad";
+                return getString(R.string.bad);
             case R.id.radioButton5 :
-                return "Very Bad" ;
+                return getString(R.string.very_bad);
             default :
-                return "Regular";
+                return getString(R.string.regular);
         }
     }
 

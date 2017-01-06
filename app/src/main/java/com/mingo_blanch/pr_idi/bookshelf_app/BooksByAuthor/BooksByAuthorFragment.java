@@ -75,6 +75,12 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.GONE);
+        super.onDestroyView();
+    }
+
     private void prepareList() {
         books = bookData.getBooksByAuthor();
         setmItems();

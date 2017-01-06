@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
 
-        mSearchView.setQueryHint("Cercar títol...");
+        mSearchView.setQueryHint(getString(R.string.search_title)+"...");
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("unused")
     private void setDataBase() {
         //////////////////////////////// SET DATABASE
-        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", "REGULAR");
+        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", getString(R.string.regular));
         bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", getString(R.string.very_good));
         bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", getString(R.string.very_bad));
         bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", getString(R.string.bad));
@@ -288,13 +288,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showPersEvalEditedSnackbar(final Book b, final String persEval) {
-        Snackbar.make(findViewById(R.id.clayout), "Your personal evaluation for the book '"+b.getTitle()+"' " + "is: " + b.getPersonal_evaluation(), Snackbar.LENGTH_LONG)
+        Snackbar.make(findViewById(R.id.clayout), getString(R.string.your_pers_eval_for_book) + " '"+b.getTitle()+"' " + getString(R.string.is) + ": " + b.getPersonal_evaluation(), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.UNDO), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         bookData.updatePersonalEvaluation(b.getId(), persEval);
                         ((UpdatableList)mFragment).updateList();
-                        Snackbar snackbar1 = Snackbar.make(findViewById(R.id.clayout), "All changes were undone", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar1 = Snackbar.make(findViewById(R.id.clayout), getString(R.string.changes_undone), Snackbar.LENGTH_LONG);
                         snackbar1.show();
                     }
                 })

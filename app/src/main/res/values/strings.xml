@@ -60,4 +60,6 @@
     <string name="changes_undone">All changes were undone</string>
     <string name="your_pers_eval_for_book">Your personal evaluation for the book</string>
     <string name="is">is</string>
+    <string name="subject_group_number"><![CDATA[IDI 2016/17 Q1\nAndXXX]]></string>
+    <string name="app_description">This is a description of the app</string>
 </resources>

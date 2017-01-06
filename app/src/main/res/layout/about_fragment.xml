@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="56dp"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_bookshelf"
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:layout_below="@+id/logo"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:id="@+id/app_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/material_blue_grey_800"
+        android:layout_below="@+id/app_name"
+        android:id="@+id/subject_group"
+        android:text="@string/subject_group_number"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:padding="5dp"
+        android:textColor="@color/material_blue_grey_900"
+        android:layout_below="@+id/subject_group"
+        android:id="@+id/members"
+        android:text="Iván de Mingo Guerrero\nArnau Blanch Cortès"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_below="@id/members"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:text="@string/app_description"/>
+
+</RelativeLayout>

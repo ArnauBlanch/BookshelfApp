@@ -75,6 +75,12 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
     }
 
     @Override
+    public void onDestroyView() {
+        getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.GONE);
+        super.onDestroyView();
+    }
+
+    @Override
     public void filter(String text) {
         // Filter booksList with text
         if (!text.isEmpty()) {

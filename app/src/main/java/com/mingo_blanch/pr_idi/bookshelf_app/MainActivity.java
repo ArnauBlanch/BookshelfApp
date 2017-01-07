@@ -25,7 +25,7 @@ import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor.BooksByAuthorFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BooksByCategoryFragment;
-import com.mingo_blanch.pr_idi.bookshelf_app.CreateBook.CreateBookFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.AddBook.AddBookFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.DeleteBook.DeleteDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainWindow.MainFragment;
@@ -34,7 +34,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-            CreateBookFragment.CreateBookFragmentListener,
+        AddBookFragment.AddBookFragmentListener,
             DeleteDialogFragment.DeleteBookListener, PersEvalDialogFragment.PersEvalListener {
 
     private BookData bookData;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         fabCreationDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((CreateBookFragment)mFragment).saveListener();
+                ((AddBookFragment)mFragment).saveListener();
             }
         });
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
-        else if (!mSearchView.isIconified()) {
+        else if (mSearchView != null && !mSearchView.isIconified()) {
             Log.v("test", "ieep");
             mSearchView.setIconified(true);
         }
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(new BooksByCategoryFragment());
                 break;
             case R.id.nav_create_book:
-                replaceFragment(new CreateBookFragment());
+                replaceFragment(new AddBookFragment());
                 break;
             case R.id.nav_about:
                 replaceFragment(new AboutFragment());
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity
 
     private void onAddBook() {
         addingBook = true;
-        replaceFragment(new CreateBookFragment());
+        replaceFragment(new AddBookFragment());
     }
 
     @Override
@@ -336,7 +336,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setActionBarTitle(String title) {
-        mToolbar.setTitle(title);
+        if (mToolbar != null)
+            mToolbar.setTitle(title);
     }
 
     private void setCreateBookActionBar() {

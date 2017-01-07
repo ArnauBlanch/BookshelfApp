@@ -45,7 +45,7 @@ public class DeleteDialogFragment extends DialogFragment {
 
         long bookId = getArguments().getLong("bookId");
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DeleteDialogTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         builder.setMessage(R.string.dialog_delete_confirmation)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

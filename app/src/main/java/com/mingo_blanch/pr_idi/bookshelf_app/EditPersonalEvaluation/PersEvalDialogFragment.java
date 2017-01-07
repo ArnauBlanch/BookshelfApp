@@ -51,7 +51,7 @@ public class PersEvalDialogFragment extends DialogFragment {
 
         bookId = getArguments().getLong("bookId");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 

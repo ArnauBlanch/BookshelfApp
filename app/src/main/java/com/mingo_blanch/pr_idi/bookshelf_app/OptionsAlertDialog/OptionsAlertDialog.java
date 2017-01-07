@@ -53,17 +53,17 @@ public class OptionsAlertDialog extends AlertDialog {
                 }
                 transaction.addToBackStack(null);
 
-                final DialogFragment[] newFragment = {new DialogFragment()};
+                DialogFragment newFragment = new DialogFragment();
                 switch (position) {
                     case 0 :
-                        newFragment[0] = PersEvalDialogFragment.newInstance(id);
+                        newFragment = PersEvalDialogFragment.newInstance(id);
                         break;
                     case 1 :
-                        newFragment[0] = DeleteDialogFragment.newInstance(id);
+                        newFragment = DeleteDialogFragment.newInstance(id);
                         break;
                 }
                 // Show the selected dialog
-                newFragment[0].show(transaction, "dialog");
+                newFragment.show(transaction, "dialog");
             }
         });
         builder.show();

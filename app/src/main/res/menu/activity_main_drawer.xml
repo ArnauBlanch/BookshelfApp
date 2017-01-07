@@ -1,47 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/nav_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_a"
+            android:title="Bloc de tasques A">
+            <menu>
+                <group android:id="@+id/nav_group_a"
+                    android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_list_category"
+                        android:checkable="true"
+                        android:icon="@drawable/category"
+                        android:title="@string/books_by_category" />
+                    <item
+                        android:id="@+id/nav_create_book"
+                        android:checkable="true"
+                        android:icon="@drawable/add_box"
+                        android:title="@string/add_new_book" />
+                    <item
+                        android:id="@+id/nav_delete_book"
+                        android:checkable="true"
+                        android:icon="@drawable/delete"
+                        android:title="@string/delete_book" />
+                </group>
+            </menu>
+        </item>
 
-    <item android:title="Bloc de tasques A">
-        <menu>
-            <item
-                android:id="@+id/nav_list_category"
-                android:icon="@drawable/category"
-                android:title="@string/books_by_category" />
-            <item
-                android:id="@+id/nav_create_book"
-                android:icon="@drawable/add_box"
-                android:title="@string/add_new_book" />
-            <item
-                android:id="@+id/nav_delete_book"
-                android:icon="@drawable/delete"
-                android:title="@string/delete_book" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_item_b"
+            android:title="Bloc de tasques B">
+            <menu>
+                <group android:id="@+id/nav_group_b"
+                    android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_home"
+                        android:checkable="true"
+                        android:icon="@drawable/ic_home_black_24dp"
+                        android:title="@string/home" />
+                    <item
+                        android:id="@+id/nav_books_by_author"
+                        android:checkable="true"
+                        android:icon="@drawable/ic_people_black_24dp"
+                        android:title="@string/books_by_author" />
+                    <item
+                        android:id="@+id/nav_edit_personal_valoration"
+                        android:checkable="true"
+                        android:icon="@drawable/ic_star_black_24dp"
+                        android:title="@string/edit_pers_eval" />
+                </group>
+            </menu>
+        </item>
 
-    <item android:title="Bloc de tasques B">
-        <menu>
-            <item
-                android:id="@+id/nav_home"
-                android:icon="@drawable/ic_home_black_24dp"
-                android:title="@string/home" />
-            <item
-                android:id="@+id/nav_books_by_author"
-                android:icon="@drawable/ic_people_black_24dp"
-                android:title="@string/books_by_author" />
-            <item
-                android:id="@+id/nav_edit_personal_valoration"
-                android:icon="@drawable/ic_star_black_24dp"
-                android:title="@string/edit_pers_eval" />
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/nav_help"
-        android:icon="@drawable/ic_help_black_24dp"
-        android:title="@string/help" />
-    <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_info_black_24dp"
-        android:title="@string/about" />
+        <item
+            android:id="@+id/nav_help"
+            android:checkable="true"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="@string/help" />
+        <item
+            android:id="@+id/nav_about"
+            android:checkable="true"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/about" />
+    </group>
 
 </menu>

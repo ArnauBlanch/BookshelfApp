@@ -21,16 +21,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mingo_blanch.pr_idi.bookshelf_app.AddBook.AddBookFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor.BooksByAuthorFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BooksByCategoryFragment;
-import com.mingo_blanch.pr_idi.bookshelf_app.AddBook.AddBookFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.DeleteBook.DeleteDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainWindow.MainFragment;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -43,7 +41,8 @@ public class MainActivity extends AppCompatActivity
     private SearchView mSearchView;
     private boolean addingBook;
     private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private int mNavItemId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,15 +81,16 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
 
         // Navigation Drawer
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mNavItemId = R.id.nav_home;
+        mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
 
         FloatingActionButton fabCreate = (FloatingActionButton)findViewById(R.id.fab_btn_create);
         fabCreate.setOnClickListener(new View.OnClickListener() {
@@ -132,22 +132,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            return;
-        }
-        else if (mSearchView != null && !mSearchView.isIconified()) {
+        } else if (mSearchView != null && !mSearchView.isIconified()) {
             Log.v("test", "ieep");
             mSearchView.setIconified(true);
-        }
-        else if (addingBook) {
+        } else if (addingBook) {
             addingBook = false;
+            // Navigation drawer: check last navigation drawer item, before creating book
+            setAddBookNavItemChecked(false);
             replaceFragment(mBackFragment);
-            return;
-        } else if (!Objects.equals(mFragment.getClass().getSimpleName(), "MainFragment")){
-            mFragment = new MainFragment();
-            replaceFragment(mFragment);
-            return;
-        }
-        else
+        } else if (!(mFragment instanceof MainFragment)){
+            onNavigationItemSelected(mNavigationView.getMenu().findItem(R.id.nav_home));
+        } else
             super.onBackPressed();
     }
 
@@ -196,6 +191,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
+        // Update the checked item in the navigation menu
+        mNavItemId = menuItem.getItemId();
+
         switch (menuItem.getItemId()) {
             case R.id.nav_books_by_author :
                 replaceFragment(new BooksByAuthorFragment());
@@ -211,13 +209,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 replaceFragment(new AboutFragment());
-            default :
                 break;
         }
 
         // Close the navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        // Reload navigation drawer
+        mNavigationView.getMenu().clear();
+        mNavigationView.inflateMenu(R.menu.activity_main_drawer);
+        mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
 
         return true;
     }
@@ -234,15 +236,6 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
         // Update global variable
         mFragment = newFragment;
-
-        // Set the navigation icon
-        /*
-        if (addingBook) {
-            setCreateBookActionBar();
-        } else {
-            setMainActionBar();
-        }
-        */
 
         // Set the search item iconified
         mSearchView.setIconified(true);
@@ -312,12 +305,14 @@ public class MainActivity extends AppCompatActivity
 
     private void onAddBook() {
         addingBook = true;
+        setAddBookNavItemChecked(true);
         replaceFragment(new AddBookFragment());
     }
 
     @Override
     public void onBookCreated(final Book b) {
         replaceFragment(mBackFragment);
+        setAddBookNavItemChecked(false);
         showBookCreatedSnackbar(b);
         addingBook = false;
     }
@@ -340,31 +335,12 @@ public class MainActivity extends AppCompatActivity
             mToolbar.setTitle(title);
     }
 
-    private void setCreateBookActionBar() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        mSearchView.setVisibility(View.GONE);
-    }
-
-    private void setMainActionBar() {
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        mSearchView.setVisibility(View.VISIBLE);
+    public void setAddBookNavItemChecked(boolean check) {
+        mNavigationView.getMenu().clear();
+        mNavigationView.inflateMenu(R.menu.activity_main_drawer);
+        if (check)
+            mNavigationView.getMenu().findItem(R.id.nav_create_book).setChecked(true);
+        else
+            mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
     }
 }

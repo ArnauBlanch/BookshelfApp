@@ -6,15 +6,15 @@
             <item
                 android:id="@+id/nav_list_category"
                 android:icon="@drawable/category"
-                android:title="Llibres per categoria" />
+                android:title="@string/books_by_category" />
             <item
                 android:id="@+id/nav_create_book"
                 android:icon="@drawable/add_box"
-                android:title="Afegeix nou llibre" />
+                android:title="@string/add_new_book" />
             <item
                 android:id="@+id/nav_delete_book"
                 android:icon="@drawable/delete"
-                android:title="Esborra llibre" />
+                android:title="@string/delete_book" />
         </menu>
     </item>
 
@@ -23,25 +23,25 @@
             <item
                 android:id="@+id/nav_home"
                 android:icon="@drawable/ic_home_black_24dp"
-                android:title="Inici" />
+                android:title="@string/home" />
             <item
                 android:id="@+id/nav_books_by_author"
                 android:icon="@drawable/ic_people_black_24dp"
-                android:title="Llibres per autor" />
+                android:title="@string/books_by_author" />
             <item
                 android:id="@+id/nav_edit_personal_valoration"
                 android:icon="@drawable/ic_star_black_24dp"
-                android:title="Editar valoracions personals" />
+                android:title="@string/edit_pers_eval" />
         </menu>
     </item>
 
     <item
         android:id="@+id/nav_help"
         android:icon="@drawable/ic_help_black_24dp"
-        android:title="Ajut" />
+        android:title="@string/help" />
     <item
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_info_black_24dp"
-        android:title="Sobre l'aplicació" />
+        android:title="@string/about" />
 
 </menu>

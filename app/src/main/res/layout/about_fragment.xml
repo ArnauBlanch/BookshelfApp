@@ -42,7 +42,7 @@
         android:textColor="@color/material_blue_grey_800"
         android:layout_below="@+id/app_name"
         android:id="@+id/subject_group"
-        android:text="@string/subject_group_number"/>
+        android:text="@string/subject"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         android:textColor="@color/material_blue_grey_900"
         android:layout_below="@+id/subject_group"
         android:id="@+id/members"
-        android:text="Iván de Mingo Guerrero\nArnau Blanch Cortès"/>
+        android:text="Iván de Mingo Guerrero\nArnau Blanch Cortès\n(GRUP And105)"/>
 
     <TextView
         android:layout_width="match_parent"

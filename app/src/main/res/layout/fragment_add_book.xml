@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/create_book_fragment"
+    android:id="@+id/add_book_fragment"
     android:paddingTop="56dp"
     tools:context="com.mingo_blanch.pr_idi.bookshelf_app.MainActivity">
 <LinearLayout
@@ -12,12 +12,16 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:scrollbarStyle="outsideOverlay"
+    android:clipToPadding="false"
+    android:paddingBottom="56dp" >
 
     <LinearLayout
+        android:id="@+id/titleLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginRight="12dp">
 
@@ -32,8 +36,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:id="@+id/titleLayout"
-            android:layout_height="60dp">
+            android:id="@+id/titleTILayout"
+            android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
@@ -49,9 +53,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/authorLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginRight="12dp">
 
@@ -66,8 +71,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:id="@+id/authorLayout"
-            android:layout_height="60dp">
+            android:id="@+id/authorTILayout"
+            android:layout_height="wrap_content">
             <AutoCompleteTextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
@@ -83,9 +88,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/yearLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginRight="12dp">
 
@@ -100,8 +106,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:id="@+id/yearLayout"
-            android:layout_height="60dp">
+            android:id="@+id/yearTILayout"
+            android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/year"
                 android:layout_width="match_parent"
@@ -117,9 +123,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/publisherLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginRight="12dp">
 
@@ -134,8 +141,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:id="@+id/publisherLayout"
-            android:layout_height="60dp">
+            android:id="@+id/publisherTILayout"
+            android:layout_height="wrap_content">
             <AutoCompleteTextView
                 android:id="@+id/publisher"
                 android:layout_width="match_parent"
@@ -151,9 +158,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/categoryLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginRight="12dp">
 
@@ -168,8 +176,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:id="@+id/categoryLayout"
-            android:layout_height="60dp">
+            android:id="@+id/categoryTILayout"
+            android:layout_height="wrap_content">
             <AutoCompleteTextView
                 android:id="@+id/category"
                 android:layout_width="match_parent"
@@ -185,16 +193,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/evalLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginRight="12dp">
 
         <ImageView
             android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:paddingTop="18dp"
+            android:layout_height="64dp"
+            android:paddingTop="26dp"
             android:paddingBottom="6dp"
             android:layout_gravity="center"
             android:contentDescription="@string/pers_eval"
@@ -203,23 +212,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/evalLayout"
             android:layout_marginLeft="0dp" >
             <TextView
                 android:id="@+id/evalLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/pers_eval"
-                android:textColor="@color/colorAccent"
+                android:text=" "
                 android:textSize="12sp"
                 android:paddingLeft="4dp"
-                android:visibility="gone"
+
                 />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/evalTILayout"
+                android:layout_marginLeft="4dp"
+                android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/evaluation"
-                android:layout_marginLeft="-4dp"
+                android:layout_marginLeft="-8dp"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:textSize="16sp"
@@ -228,8 +241,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginRight="4dp"
-                android:layout_marginLeft="4dp"
-                android:background="#000" />
+                android:background="@color/primary_dark_material_light" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
 

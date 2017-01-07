@@ -103,7 +103,7 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
         // Sort by title
         Collections.sort(booksList, new Comparator<Book>() {
             public int compare(Book a, Book b) {
-                return a.getTitle().compareTo(b.getTitle());
+                return a.getTitle().toLowerCase().compareTo(b.getTitle().toLowerCase());
             }
         });
     }

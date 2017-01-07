@@ -136,7 +136,7 @@ public class BookData {
     }
 
     public TreeMap<String, ArrayList<Book>> getBooksByCategory() {
-        TreeMap<String, ArrayList<Book>> categories = new TreeMap<>();
+        TreeMap<String, ArrayList<Book>> categories = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
         List<Book> books = getAllBooks();
 
@@ -155,7 +155,7 @@ public class BookData {
     }
 
     public TreeMap<String, ArrayList<Book>> getBooksByAuthor() {
-        TreeMap<String, ArrayList<Book>> authors = new TreeMap<>();
+        TreeMap<String, ArrayList<Book>> authors = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
         List<Book> books = getAllBooks();
 

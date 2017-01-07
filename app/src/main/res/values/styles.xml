@@ -18,10 +18,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="DeleteDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:colorAccent">@color/colorPrimaryDark</item>
         <item name="android:textColor">@color/title</item>
         <item name="android:textColorPrimary">#757575</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
 </resources>

@@ -28,7 +28,6 @@ import java.util.Comparator;
 public class MainFragment extends Fragment implements UpdatableList, SearchableList {
     private BookData bookData;
     private ArrayList<Book> booksList, booksCopy;
-    private RecyclerView rv;
     private MainAdapter mAdapter;
 
     public MainFragment (){}
@@ -47,7 +46,7 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
         booksCopy = new ArrayList<Book>();
         booksCopy.addAll(booksList);
 
-        rv = (RecyclerView) view.findViewById(R.id.content_main_rv);
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.content_main_rv);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -111,8 +110,15 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
 
     @Override
     public void updateList() {
-        booksList = (ArrayList<Book>) bookData.getAllBooks();
+        booksList.clear();
+        booksList.addAll(bookData.getAllBooks());
         sortBooksList();
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
     }
 }

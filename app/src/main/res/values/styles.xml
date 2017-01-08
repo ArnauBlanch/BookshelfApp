@@ -25,4 +25,9 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="RatingBar" parent="Base.Widget.AppCompat.RatingBar">
+        <item name="android:colorControlNormal">@color/colorAccent</item>
+        <item name="android:colorControlActivated">@color/colorAccentLight</item>
+    </style>
+
 </resources>

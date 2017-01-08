@@ -13,55 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:paddingStart="28dp"
-        android:paddingTop="10dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:theme="@style/RatingBar"
+        android:stepSize="1"
+        android:numStars="5"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:text="VERY GOOD"
-            android:paddingStart="15dip"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton" />
-
-        <RadioButton
-            android:text="GOOD"
-            android:paddingStart="15dip"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton2" />
-
-        <RadioButton
-            android:text="REGULAR"
-            android:paddingStart="15dip"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton3" />
-
-        <RadioButton
-            android:text="BAD"
-            android:paddingStart="15dip"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton4" />
-
-        <RadioButton
-            android:text="VERY BAD"
-            android:paddingStart="15dip"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton5" />
-
-    </RadioGroup>
-
+    <TextView
+        android:id="@+id/rating_bar_text"
+        android:textColor="@color/colorAccent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

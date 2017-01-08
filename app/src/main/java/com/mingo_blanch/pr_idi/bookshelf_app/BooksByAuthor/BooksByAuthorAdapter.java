@@ -39,7 +39,7 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static class ItemViewHolder extends RecyclerView.ViewHolder
                                         implements View.OnLongClickListener {
 
-        private TextView title, category, year;
+        private TextView title, category, year, evaluation;
         private Long id;
 
         public ItemViewHolder(View itemView) {
@@ -49,11 +49,13 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
             title = (TextView) itemView.findViewById(R.id.book_title);
             category = (TextView) itemView.findViewById(R.id.book_subtitle);
             year = (TextView) itemView.findViewById(R.id.book_year);
+            evaluation = (TextView) itemView.findViewById(R.id.book_evaluation);
         }
 
         public void setTitle(String text) { this.title.setText(text); }
         public void setCategory(String text) { this.category.setText(text); }
         public void setYear(String text) { this.year.setText(text); }
+        public void setEvaluation(String text) { this.evaluation.setText(text.toUpperCase()); }
         public void setId(Long id) { this.id = id; }
 
         @Override
@@ -94,6 +96,7 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
         holder.setTitle(b.getTitle());
         holder.setCategory(b.getCategory());
         holder.setYear(String.valueOf(b.getYear()));
+        holder.setEvaluation(b.getPersonal_evaluation());
         holder.setId(b.getId());
     }
 

@@ -26,7 +26,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder
                                     implements View.OnLongClickListener {
 
-        private TextView title, author, year;
+        private TextView title, author, year, evaluation;
         private Long id;
 
         public ViewHolder(View view) {
@@ -36,6 +36,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             title  = (TextView) view.findViewById(R.id.book_title);
             author = (TextView) view.findViewById(R.id.book_subtitle);
             year   = (TextView) view.findViewById(R.id.book_year);
+            evaluation = (TextView) view.findViewById(R.id.book_evaluation);
         }
 
         public void setTitle(String title) { this.title.setText(title); }
@@ -43,6 +44,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public void setAuthor(String author) { this.author.setText(author); }
 
         public void setYear(Integer year) { this.year.setText(String.valueOf(year)); }
+
+        public void setEvaluation(String evaluation) { this.evaluation.setText(evaluation.toUpperCase()); }
 
         public void setId(Long id) { this.id = id; }
 
@@ -67,6 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.setTitle(book.getTitle());
         holder.setAuthor(book.getAuthor());
         holder.setYear(book.getYear());
+        holder.setEvaluation(book.getPersonal_evaluation());
         holder.setId(book.getId());
     }
 

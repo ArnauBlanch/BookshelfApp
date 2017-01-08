@@ -34,7 +34,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             view.setLongClickable(true);
             view.setOnLongClickListener(this);
             title  = (TextView) view.findViewById(R.id.book_title);
-            author = (TextView) view.findViewById(R.id.book_author);
+            author = (TextView) view.findViewById(R.id.book_subtitle);
             year   = (TextView) view.findViewById(R.id.book_year);
         }
 

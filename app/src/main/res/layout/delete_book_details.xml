@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/book_author"
+                android:id="@+id/book_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sample Author"
@@ -75,9 +75,9 @@
                 android:paddingTop="6dp"
                 android:layout_weight="0"
                 android:textSize="14sp"
-                android:layout_toRightOf="@+id/book_author"
-                android:layout_alignTop="@+id/book_author"
-                android:layout_alignBottom="@+id/book_author"/>
+                android:layout_toRightOf="@+id/book_subtitle"
+                android:layout_alignTop="@+id/book_subtitle"
+                android:layout_alignBottom="@+id/book_subtitle"/>
 
             <TextView
                 android:id="@+id/book_publisher"
@@ -88,8 +88,8 @@
                 android:textColor="?android:attr/textColorSecondary"
                 android:paddingTop="6dp"
                 android:layout_toRightOf="@+id/separator"
-                android:layout_alignTop="@+id/book_author"
-                android:layout_alignBottom="@id/book_author"
+                android:layout_alignTop="@+id/book_subtitle"
+                android:layout_alignBottom="@id/book_subtitle"
                 />
         </LinearLayout>
     </LinearLayout>

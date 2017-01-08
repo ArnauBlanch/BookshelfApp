@@ -10,8 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
@@ -47,7 +47,8 @@ public class PersEvalDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final BookData bookData;
-        final EditText editText;
+        final RatingBar ratingBar;
+        final TextView ratingBarText;
 
         bookId = getArguments().getLong("bookId");
 
@@ -63,27 +64,38 @@ public class PersEvalDialogFragment extends DialogFragment {
         bookData = new BookData(getActivity());
         bookData.open();
         List<Book> books = bookData.getAllBooks();
-        final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        // Set the rating bar and the text view below it
+        ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
+        ratingBarText = (TextView) view.findViewById(R.id.rating_bar_text);
+        setOnRatingBarChangeListener(ratingBar, ratingBarText);
+
+        // Get the actual book evaluation and show it in the rating bar and text view
         Book book = new Book();
         boolean found = false;
         for (int i = 0; i < books.size() && !found; i++) {
             book = books.get(i);
             if (book.getId() == bookId) {
                 found = true;
+                // Get book personal evaluation
                 persEval = book.getPersonal_evaluation();
-                radioGroup.check(personalEvaluationToId(persEval));
+                // Set rating
+                ratingBar.setRating((float) personalEvaluationToRating(persEval));
+                // Set text
+                ratingBarText.setText(persEval.toUpperCase());
+                // Set title
                 builder.setTitle(book.getTitle() + " (" + book.getYear() + ")");
             }
         }
         final Book a = book;
 
+        // Set the positive and negative button behaviour
         builder.setView(view)
                 // Add action buttons
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Update the DB with the nuew personal evaluation for bookId
-                        String newPersEval = idToPersonalEvaluation(radioGroup.getCheckedRadioButtonId());
+                        String newPersEval = ratingToPersonalEvaluation((int) ratingBar.getRating());
                         bookData.updatePersonalEvaluation(bookId, newPersEval);
                         a.setPersonal_evaluation(newPersEval);
                         listener.onEditPersEvalConfirmed(a, persEval);
@@ -97,31 +109,31 @@ public class PersEvalDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private int personalEvaluationToId(String persEval){
+    private int personalEvaluationToRating(String persEval){
         if (persEval.equals(getString(R.string.very_good)))
-            return R.id.radioButton;
+            return 5;
         else if (persEval.equals(getString(R.string.good)))
-            return R.id.radioButton2;
+            return 4;
         else if (persEval.equals(getString(R.string.regular)))
-            return R.id.radioButton3;
+            return 3;
         else if (persEval.equals(getString(R.string.bad)))
-            return R.id.radioButton4;
+            return 2;
         else
-            return R.id.radioButton5;
+            return 1;
     }
 
-    private String idToPersonalEvaluation(int id) {
-        switch (id) {
-            case R.id.radioButton :
+    private String ratingToPersonalEvaluation(int rate) {
+        switch (rate) {
+            case 5 :
                 return getString(R.string.very_good);
-            case R.id.radioButton2 :
+            case 4 :
                 return getString(R.string.good);
-            case R.id.radioButton4 :
-                return getString(R.string.bad);
-            case R.id.radioButton5 :
-                return getString(R.string.very_bad);
-            default :
+            case 3 :
                 return getString(R.string.regular);
+            case 2 :
+                return getString(R.string.bad);
+            default :
+                return getString(R.string.very_bad);
         }
     }
 
@@ -135,6 +147,15 @@ public class PersEvalDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    private void setOnRatingBarChangeListener(RatingBar ratingBar, final TextView textView) {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                textView.setText((ratingToPersonalEvaluation((int)v)).toUpperCase());
+            }
+        });
     }
 
 }

@@ -47,7 +47,7 @@ public class BooksByAuthorAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setLongClickable(true);
             itemView.setOnLongClickListener(this);
             title = (TextView) itemView.findViewById(R.id.book_title);
-            category = (TextView) itemView.findViewById(R.id.book_author);
+            category = (TextView) itemView.findViewById(R.id.book_subtitle);
             year = (TextView) itemView.findViewById(R.id.book_year);
         }
 

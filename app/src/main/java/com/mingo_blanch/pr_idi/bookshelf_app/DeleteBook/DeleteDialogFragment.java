@@ -63,7 +63,7 @@ public class DeleteDialogFragment extends DialogFragment {
         View bookDetailsView = getActivity().getLayoutInflater().inflate(R.layout.delete_book_details, null);
 
         ((TextView)bookDetailsView.findViewById(R.id.book_title)).setText(book.getTitle());
-        ((TextView)bookDetailsView.findViewById(R.id.book_author)).setText(book.getAuthor());
+        ((TextView)bookDetailsView.findViewById(R.id.book_subtitle)).setText(book.getAuthor());
         ((TextView)bookDetailsView.findViewById(R.id.book_year)).setText("("+String.valueOf(book.getYear())+")");
         ((TextView)bookDetailsView.findViewById(R.id.book_publisher)).setText(book.getPublisher());
         ((TextView)bookDetailsView.findViewById(R.id.book_persEval)).setText(book.getPersonal_evaluation());

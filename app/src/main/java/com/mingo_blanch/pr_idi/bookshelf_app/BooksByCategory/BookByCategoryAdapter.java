@@ -121,7 +121,7 @@ class BookByCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             v.setOnLongClickListener(this);
 
             title = (TextView) v.findViewById(R.id.book_title);
-            author = (TextView) v.findViewById(R.id.book_author);
+            author = (TextView) v.findViewById(R.id.book_subtitle);
             year = (TextView) v.findViewById(R.id.book_year);
             publisher = (TextView) v.findViewById(R.id.book_publisher);
             persEval = (TextView) v.findViewById(R.id.book_persEval);

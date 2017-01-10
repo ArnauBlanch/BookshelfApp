@@ -9,17 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
-import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainActivity;
 import com.mingo_blanch.pr_idi.bookshelf_app.R;
 import com.mingo_blanch.pr_idi.bookshelf_app.SearchableList;
 import com.mingo_blanch.pr_idi.bookshelf_app.UpdatableList;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 
 public class BooksByCategoryFragment extends Fragment implements UpdatableList, SearchableList {
 
@@ -36,6 +32,13 @@ public class BooksByCategoryFragment extends Fragment implements UpdatableList, 
         getActivity().findViewById(R.id.fab_btn_create).setVisibility(View.VISIBLE);
 
         ///////////////
+        // Handle screen rotation
+        RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.booklayout);
+        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
+            rl.setPaddingRelative(0, 96, 0, 0);
+        } else {
+            rl.setPaddingRelative(0, 112, 0, 0);
+        }
 
         mAdapter = new BookByCategoryAdapter(bookData.getBooksByCategory());
 

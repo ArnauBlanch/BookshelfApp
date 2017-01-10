@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
@@ -29,6 +30,7 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
     private BookData bookData;
     private ArrayList<Book> booksList, booksCopy;
     private MainAdapter mAdapter;
+    private boolean landscape;
 
     public MainFragment (){}
 
@@ -47,6 +49,15 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
         booksCopy.addAll(booksList);
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.content_main_rv);
+
+        // Handle screen rotation
+        RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.content_main);
+        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
+            rl.setPaddingRelative(0, 96, 0, 0);
+        } else {
+            rl.setPaddingRelative(0, 112, 0, 0);
+        }
+
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

@@ -1,6 +1,7 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.AddBook;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -79,10 +80,11 @@ public class AddBookFragment extends Fragment {
 
         // Handle screen rotation
         ScrollView sv = (ScrollView) view.findViewById(R.id.add_book_fragment);
-        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
-            sv.setPaddingRelative(0, 96, 0, 0); // 48 dp = 96 px
-        } else {
-            sv.setPaddingRelative(0, 112, 0, 0); // 56 dp = 112 px
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            sv.setPadding(0, 96, 0, 0);
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT){
+            sv.setPadding(0, 112, 0, 0);
         }
 
         titleLayout = (LinearLayout) view.findViewById(R.id.titleLayout);

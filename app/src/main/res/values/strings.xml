@@ -60,7 +60,6 @@
     <string name="changes_undone">All changes were undone</string>
     <string name="your_pers_eval_for_book">Your personal evaluation for the book</string>
     <string name="is">is</string>
-    <string name="app_description">This is a description of the app</string>
     <string name="about">About</string>
     <string name="subject">Interacció i Disseny d\'Interfícies\nCurs 2016/17 Q1\nFacultat d\'Informàtica de Barcelona</string>
     <string name="books_by_category">Books by category</string>
@@ -70,4 +69,6 @@
     <string name="books_by_author">Books by author</string>
     <string name="edit_pers_eval">Edit personal evaluations</string>
     <string name="help">Help</string>
+    <string name="app_description">BookshelfApp is an Android app designed and developed by two computer engineering students as part of the work of a subject focused on interaction and the design of interfaces.
+        \nThe app is formed by a book database, on which the user can select how to show the books and edit some parameters of them.</string>
 </resources>

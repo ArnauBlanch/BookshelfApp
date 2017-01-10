@@ -16,27 +16,11 @@
             android:checkable="true"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/books_by_author" />
-
-        <group
-            android:id="@+id/group_2"
-            android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_create_book"
-                android:checkable="true"
-                android:icon="@drawable/add_box"
-                android:title="@string/add_new_book" />
-            <item
-                android:id="@+id/nav_edit_personal_valoration"
-                android:checkable="true"
-                android:icon="@drawable/ic_star_black_24dp"
-                android:title="@string/edit_pers_eval" />
-            <item
-                android:id="@+id/nav_delete_book"
-                android:checkable="true"
-                android:icon="@drawable/delete"
-                android:title="@string/delete_book" />
-        </group>
-
+        <item
+            android:id="@+id/nav_create_book"
+            android:checkable="true"
+            android:icon="@drawable/add_box"
+            android:title="@string/add_new_book" />
             <group
                 android:id="@+id/group_3"
                 android:checkableBehavior="single">

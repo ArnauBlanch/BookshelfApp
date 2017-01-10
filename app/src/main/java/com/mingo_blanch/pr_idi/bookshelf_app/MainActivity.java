@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {
+                setToolbar();
+                setNavigationDrawer();
+                setFloatingActionButton();
                 return;
             }
 
@@ -76,11 +79,20 @@ public class MainActivity extends AppCompatActivity
                     .add(R.id.fragment_container, mFragment).commit();
         }
 
-        // Toolbar
+        setToolbar();
+        setNavigationDrawer();
+        setFloatingActionButton();
+
+        // Set the database
+        if (bookData.getAllBooks().size() == 0) setDataBase();
+    }
+
+    private void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+    }
 
-        // Navigation Drawer
+    private void setNavigationDrawer() {
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -91,7 +103,9 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavItemId = R.id.nav_home;
         mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
+    }
 
+    private void setFloatingActionButton() {
         FloatingActionButton fabCreate = (FloatingActionButton)findViewById(R.id.fab_btn_create);
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +120,6 @@ public class MainActivity extends AppCompatActivity
                 ((AddBookFragment)mFragment).saveListener();
             }
         });
-
-        // Set the database
-        if (bookData.getAllBooks().size() == 0) setDataBase();
     }
 
     // Life cycle methods. Check whether it is necessary to reimplement them
@@ -338,9 +349,33 @@ public class MainActivity extends AppCompatActivity
     public void setAddBookNavItemChecked(boolean check) {
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(R.menu.activity_main_drawer);
-        if (check)
+        if (check) {
             mNavigationView.getMenu().findItem(R.id.nav_create_book).setChecked(true);
+            mNavItemId = R.id.nav_create_book;
+        }
         else
             mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save mFragment
+        getSupportFragmentManager().putFragment(outState, "mFragment", mFragment);
+        // Save navigation item to check after configuration change
+        outState.putInt("mNavItemId", mNavItemId);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        // Restore mFragment
+        mFragment = getSupportFragmentManager().getFragment(inState, "mFragment");
+        // Restore navigation item to check after configuration change
+        mNavItemId = inState.getInt("mNavItemId");
+        // Reload navigation drawer menu
+        mNavigationView.getMenu().clear();
+        mNavigationView.inflateMenu(R.menu.activity_main_drawer);
+        mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
     }
 }

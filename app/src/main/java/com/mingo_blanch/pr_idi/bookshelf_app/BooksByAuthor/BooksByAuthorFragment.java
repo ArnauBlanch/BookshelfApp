@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
@@ -46,6 +47,14 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
         bookData = new BookData(getActivity());
         bookData.open();
         mItems = new ArrayList<>();
+
+        // Handle screen rotation
+        RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.books_by_author_fragment);
+        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
+            rl.setPaddingRelative(0, 96, 0, 0);
+        } else {
+            rl.setPaddingRelative(0, 112, 0, 0);
+        }
 
         // Prepare the data for the adapter
         prepareList();

@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
@@ -75,6 +76,14 @@ public class AddBookFragment extends Fragment {
         bookData.open();
 
         View view = inflater.inflate(R.layout.fragment_add_book, container, false);
+
+        // Handle screen rotation
+        ScrollView sv = (ScrollView) view.findViewById(R.id.add_book_fragment);
+        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
+            sv.setPaddingRelative(0, 96, 0, 0); // 48 dp = 96 px
+        } else {
+            sv.setPaddingRelative(0, 112, 0, 0); // 56 dp = 112 px
+        }
 
         titleLayout = (LinearLayout) view.findViewById(R.id.titleLayout);
         titleTILayout = (TextInputLayout) view.findViewById(R.id.titleTILayout);

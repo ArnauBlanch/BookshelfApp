@@ -1,12 +1,14 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor;
 
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +54,13 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
         // Handle screen rotation
         RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.books_by_author_fragment);
         int orientation = getResources().getConfiguration().orientation;
+        Resources r = getResources();
+        int portrait = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, r.getDisplayMetrics());
+        int landscape = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rl.setPaddingRelative(0, 96, 0, 0);
+            rl.setPaddingRelative(0, landscape, 0, 0);
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT){
-            rl.setPaddingRelative(0, 112, 0, 0);
+            rl.setPaddingRelative(0, portrait, 0, 0);
         }
 
         // Prepare the data for the adapter

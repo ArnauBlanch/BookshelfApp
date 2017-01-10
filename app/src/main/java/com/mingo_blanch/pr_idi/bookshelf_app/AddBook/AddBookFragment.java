@@ -2,12 +2,14 @@ package com.mingo_blanch.pr_idi.bookshelf_app.AddBook;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.transition.Fade;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -81,10 +83,13 @@ public class AddBookFragment extends Fragment {
         // Handle screen rotation
         ScrollView sv = (ScrollView) view.findViewById(R.id.add_book_fragment);
         int orientation = getResources().getConfiguration().orientation;
+        Resources r = getResources();
+        int portrait = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, r.getDisplayMetrics());
+        int landscape = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            sv.setPadding(0, 96, 0, 0);
+            sv.setPaddingRelative(0, landscape, 0, 0);
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT){
-            sv.setPadding(0, 112, 0, 0);
+            sv.setPaddingRelative(0, portrait, 0, 0);
         }
 
         titleLayout = (LinearLayout) view.findViewById(R.id.titleLayout);

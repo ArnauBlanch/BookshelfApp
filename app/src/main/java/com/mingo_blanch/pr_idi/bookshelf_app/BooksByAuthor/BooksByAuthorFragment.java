@@ -1,5 +1,6 @@
 package com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,9 +51,10 @@ public class BooksByAuthorFragment extends Fragment implements UpdatableList, Se
 
         // Handle screen rotation
         RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.books_by_author_fragment);
-        if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels) {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rl.setPaddingRelative(0, 96, 0, 0);
-        } else {
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT){
             rl.setPaddingRelative(0, 112, 0, 0);
         }
 

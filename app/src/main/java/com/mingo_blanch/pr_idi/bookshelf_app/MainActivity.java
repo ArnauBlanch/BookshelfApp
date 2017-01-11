@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private int mNavItemId;
+    private CharSequence mQueryText;
+    private CharSequence mTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -183,6 +185,17 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
+
+        if (mQueryText != null) {
+            mSearchView.setIconified(false);
+            mSearchView.setQuery(mQueryText, false);
+        }
+
+        if (mTitle != null) {
+            Log.d("setToolbar()", "mTitle = " + mTitle);
+            setActionBarTitle((String) mTitle);
+            mTitle = null;
+        }
 
         return true;
     }
@@ -367,6 +380,19 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().putFragment(outState, "mFragment", mFragment);
         // Save navigation item to check after configuration change
         outState.putInt("mNavItemId", mNavItemId);
+        // Save search view state
+        if (mSearchView.isIconified())
+            mQueryText = null;
+        else
+            mQueryText = mSearchView.getQuery();
+        outState.putCharSequence("mQueryText", mQueryText);
+        // Save toolbar title
+        if (mToolbar.getTitle() == getString(R.string.app_name))
+            mTitle = null;
+        else
+            mTitle = mToolbar.getTitle();
+        Log.d("onSaveInstanceState()", "mTitle = " + mTitle);
+        outState.putCharSequence("mTitle", mTitle);
     }
 
     @Override
@@ -380,5 +406,9 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(R.menu.activity_main_drawer);
         mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
+        // Restore search view
+        mQueryText = inState.getCharSequence("mQueryText");
+        // Restore toolbar title
+        mTitle = inState.getCharSequence("mTitle");
     }
 }

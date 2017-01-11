@@ -67,17 +67,28 @@
     <string name="app_description"><p><em>BookshelfApp</em> és una aplicació per Android dissenyada i desenvolupada per dos estudiants d\'enginyeria informàtica de la UPC com a part d\'un projecte de l\'assignatura Interacció i Disseny d\'Interfícies.</p>
 <p>L\'app té la finalitat de gestionar una base de dades de llibres. Permet escollir quina visualització es desitja per als llibres, editar algun dels atributs del llibre, afegir-ne de nous i eliminar-ne.</p>
 </string>
-    <string name="help_text"><![CDATA[<h3>Cerca</h3>
-<p>Fent click sobrela icona situada a la cantonada superior dreta a qualsevol pantalla devisualització de llibres, pots introduir un text per cercar llibres per títol.Cada cop que introdueixis un caràcter el llistat de llibres mostrarà elresultat de la cerca.</p>
-<h3>Afegir llibre</h3>
-<p>Per afegir unllibre has d’omplir tots els camps que et demanen amb la informació del llibreque vols afegir a la base de dades. En alguns d\’aquests camps l\’aplicació etsuggerirà diverses entrades que coincideixin amb la teva obtingudes de la basede dades. Per finalitzar hauràs de prémer el botó flotant situat a la cantonadainferior dreta. En cas que falti omplir algun camps seràs avisat.</p>
-<p>Immediatamentdesprés d’afegir un llibre podràs desfer l\’operació fent click al botó “UNDO”del missatge flotant que apareixerà a la part inferior.</p>
-<p>Pots accedir a lavista per afegir un llibre de dues maneres diferents.</p>
-<h4>Botó flotant</h4>
-<p>El botó flotantper afegir llibre es troba a la cantonada inferior dreta quan la vista actualde l\’aplicació sigui qualsevol llista de llibres. Quan accedeixes a la vistaper crear un llibre des de aquest botó i vols navegar enrere, la vista queveuràs serà aquella des d\’on has fet click al botó flotant d\’afegir.</p>
-<h4>Menú lateral desplegable</h4>
-<p>Des de .m.m.kjkljkljkljkljkl</p>
-]]></string>
+    <string name="help_text"><![CDATA[
+        <p>Hola! Benvingut a <em><b>BookshelfApp</em></b>,<br>
+        en aquesta secció trobaràs una petita guia d’ajuda sobre les diferents funcionalitats que té l’aplicació.</p>
+        <h3 id="visualització-de-llibres">Visualització de llibres</h3>
+        <p>L’aplicació permet visualitzar els llibres de la base de dades de diverses maneres. A la pantalla incial es pot visualitzar un llistat amb els llibres ordenats per títol. A través del menú lateral es pot accedir a dues visualitzacions més, segons com estan organitzats els llibres, per categoria o per títol.</p>
+        <h3 id="cercar-llibres">Cercar llibres</h3>
+        <p>Aquesta funcionalitat et permet cercar llibres segons el seu títol en les pantalles de visualització de llibres.</p>
+        <p>En les pantalles de visualització de llibres, a la part dreta de la barra superior hi trobaràs una icona d’una lupa. Fent clic en aquesta icona, es desplegarà un camp de text on a mesura que hi vagis escrivint, la llista de llibres s’anirà actualitzant per mostrar el resultat de la teva cerca.</p>
+        <h3 id="menú-lateral">Menú lateral</h3>
+        <p>El menú lateral és un desplegable que apareix fent clic a la icona situada a la part esquerra de la barra superior o lliscant el dit cap a la dreta des del límit esquerra de la pantalla. El menú, que permet navegar per les diferents pantalles de l’aplicació, està format per dos apartats. El primer conté els diferents mètodes de visualització de llibres. El segon, en canvi, conté pantalles d’informació de l’aplicació, com <em>Ajuda</em> o <em>Sobre l’aplicació</em>.</p>
+        <h3 id="afegir-llibre">Afegir llibre</h3>
+        <p>Des del menú lateral o des de botó de “+” situat a la part inferior dreta de les visualitzacions de llibres es pot accedir a la pantalla per afegir llibres.</p>
+        <p>En aquesta pantalla trobaràs un conjunt de camps on hauràs de proporcionar la informació completa del nou llibre. Tots els camps són obligatoris. En alguns d’aquests camps l’aplicació et suggerirà diverses entrades que coincideixin amb la teva obtingudes de la base de dades.</p><p>Un cop hagis acabat, hauràs de prémer el botó “✓”  situat a la cantonada inferior dreta. En cas que falti omplir algun camps se t’avisarà.</p>
+        <p>Immediatament després d’afegir un llibre podràs desfer l’operació a través del botó <em>Desfer</em> de la notificació que apareixerà a la part inferior de la pantalla.</p>
+        <p>Pots accedir a la vista per afegir un llibre de dues maneres diferents.</p>
+        <h3 id="modificar-valoració-personal-d’un-llibre">Modificar valoració personal d’un llibre</h3>
+        <p>Des de les diverses pantalles de visualització de llibres, es pot editar la valoració personal d’un llibre mantenint polsat sobre el llibre de la llista que vols editar i seleccionant <em>Edita valoració personal</em> al menú que apareixerà.</p>
+        <p>A continuació, hauràs de donar una nova valoració al llibre dintre d’aquestes possibilitats: molt dolent, dolent, regular, bo o molt bo. Finalment, si prems el botó de <em>Guardar</em>, es modificarà la valoració personal del llibre a la base de dades i es desplegarà un missatge des del qual podràs desfer el canvi fent clic a l’opció <em>Desfer</em>.</p>
+        <h3 id="eliminar-llibre">Eliminar llibre</h3>
+        <p>Des de qualsevol de les pantalles de visualització de llibres, pots eliminar un llibre mantenint polsat l’element de la llista que correspon al llibre que vols esborrar i seleccionant <em>Elimina llibre</em> al menú que apareixerà.</p>
+        <p>Aleshores, se’t demanarà confirmació. Un cop hagis confirmat, se’t mostrarà una notificació a la part inferior de la pantalla des d’on podràs rectificar prement <em>Desfer</em> i recuperar el llibre.</p>
+    ]]></string>
 </resources>
 
 

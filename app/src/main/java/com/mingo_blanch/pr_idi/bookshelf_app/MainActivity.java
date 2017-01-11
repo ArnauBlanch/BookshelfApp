@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,7 +147,6 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (mSearchView != null && !mSearchView.isIconified()) {
-            Log.v("test", "ieep");
             mSearchView.setIconified(true);
         } else if (addingBook) {
             addingBook = false;
@@ -192,7 +190,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (mTitle != null) {
-            Log.d("setToolbar()", "mTitle = " + mTitle);
             setActionBarTitle((String) mTitle);
             mTitle = null;
         }
@@ -269,26 +266,6 @@ public class MainActivity extends AppCompatActivity
         // Set the search item iconified
         mSearchView.setIconified(true);
     }
-
-    @SuppressWarnings("unused")
-    private void setDataBase() {
-        //////////////////////////////// SET DATABASE
-        bookData.createBook("1984", "George Orwell", 1949, "Desconegut", "Distopía", getString(R.string.regular));
-        bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", getString(R.string.very_good));
-        bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", getString(R.string.very_bad));
-        bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", getString(R.string.bad));
-        bookData.createBook("Don Quijote de la Mancha", "Miguel de Cervantes", 1605, "Desconegut", "Novel·la", getString(R.string.good));
-        bookData.createBook("El Gran Gatsby", "Francis Scott Fitzgerald", 1925, "Desconegut", "Novel·la", getString(R.string.regular));
-        bookData.createBook("Todo esto te daré", "Dolores Redondo", 2016, "Editorial Planeta", "Novel·la", getString(R.string.regular));
-        bookData.createBook("El guardián invisible", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", getString(R.string.good));
-        bookData.createBook("Legado en los huesos", "Dolores Redondo", 2013, "Editorial Destino", "Thriller", getString(R.string.bad));
-        bookData.createBook("El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, "Desconegut", "Novel·la", getString(R.string.good));
-        bookData.createBook("Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, "Desconegut", "Novel·la", getString(R.string.very_good));
-        bookData.createBook("El otoño del patriarca", "Gabriel García Márquez", 1975, "Desconegut", "Novel·la", getString(R.string.very_bad));
-        bookData.createBook("El proceso", "Franz Kafka", 1925, "Desconegut", "Novel·la", getString(R.string.regular));
-        bookData.createBook("La Metamorfosis", "Franz Kafka", 1915, "Desconegut", "Relat", getString(R.string.very_good));
-    }
-
 
     private void showBookDeletedSnackbar(final Book b) {
         Snackbar.make(findViewById(R.id.clayout), "'"+b.getTitle()+"' "+getString(R.string.was_deleted), Snackbar.LENGTH_LONG)
@@ -391,7 +368,6 @@ public class MainActivity extends AppCompatActivity
             mTitle = null;
         else
             mTitle = mToolbar.getTitle();
-        Log.d("onSaveInstanceState()", "mTitle = " + mTitle);
         outState.putCharSequence("mTitle", mTitle);
     }
 
@@ -410,5 +386,14 @@ public class MainActivity extends AppCompatActivity
         mQueryText = inState.getCharSequence("mQueryText");
         // Restore toolbar title
         mTitle = inState.getCharSequence("mTitle");
+    }
+
+    @SuppressWarnings("unused")
+    private void setDataBase() {
+        //////////////////////////////// SET DATABASE
+        bookData.createBook("Harry Potter i la pedra filosofal", "J. K. Rowling", 1999, "Empúries", "Novel·la fantàstica", getString(R.string.good));
+        bookData.createBook("Steve Jobs", "Walter Isaacson", 2011, "Simon & Schuster", "Biografia", getString(R.string.very_good));
+        bookData.createBook("The Da Vinci Code", "Dan Brown", 2003, "Doubleday", "Thriller", getString(R.string.regular));
+        bookData.createBook("Cien años de soleda", "Gabriel García Márquez", 1967, "Harper", "Novel·la", getString(R.string.very_bad));
     }
 }

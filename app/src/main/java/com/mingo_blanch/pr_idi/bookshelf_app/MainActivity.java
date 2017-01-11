@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() { // TODO: Check changes [Arnau]
+    public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -394,6 +394,6 @@ public class MainActivity extends AppCompatActivity
         bookData.createBook("Harry Potter i la pedra filosofal", "J. K. Rowling", 1999, "Empúries", "Novel·la fantàstica", getString(R.string.good));
         bookData.createBook("Steve Jobs", "Walter Isaacson", 2011, "Simon & Schuster", "Biografia", getString(R.string.very_good));
         bookData.createBook("The Da Vinci Code", "Dan Brown", 2003, "Doubleday", "Thriller", getString(R.string.regular));
-        bookData.createBook("Cien años de soleda", "Gabriel García Márquez", 1967, "Harper", "Novel·la", getString(R.string.very_bad));
+        bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Harper", "Novel·la", getString(R.string.very_bad));
     }
 }

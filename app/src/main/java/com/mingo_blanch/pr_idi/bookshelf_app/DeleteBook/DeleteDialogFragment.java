@@ -27,7 +27,6 @@ public class DeleteDialogFragment extends DialogFragment {
     public static DeleteDialogFragment newInstance(long bookId) {
         DeleteDialogFragment f = new DeleteDialogFragment();
 
-        // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putLong("bookId", bookId);
         f.setArguments(args);
@@ -44,7 +43,7 @@ public class DeleteDialogFragment extends DialogFragment {
         bookData.open();
 
         long bookId = getArguments().getLong("bookId");
-        // Use the Builder class for convenient dialog construction
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         builder.setMessage(R.string.dialog_delete_confirmation)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
@@ -54,7 +53,7 @@ public class DeleteDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Nothing
+                        // No facis res
                     }
                 });
         builder.setTitle(R.string.delete_title);
@@ -70,7 +69,6 @@ public class DeleteDialogFragment extends DialogFragment {
 
         builder.setView(bookDetailsView);
 
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 

@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ((SearchableList)mFragment).filter(newText);
+                if (!(mFragment instanceof AddBookFragment))
+                    ((SearchableList)mFragment).filter(newText);
                 return true;
             }
         });

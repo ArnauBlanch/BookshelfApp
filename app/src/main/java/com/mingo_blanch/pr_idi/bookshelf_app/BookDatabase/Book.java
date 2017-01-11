@@ -2,10 +2,6 @@ package com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase;
 
 import android.support.annotation.NonNull;
 
-/**
- * Book
- * Created by pr_idi on 10/11/16.
- */
 public class Book implements Comparable<Book> {
 
     // Basic book data manipulation class

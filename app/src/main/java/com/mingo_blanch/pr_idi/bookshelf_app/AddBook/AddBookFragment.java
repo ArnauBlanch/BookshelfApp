@@ -164,10 +164,8 @@ public class AddBookFragment extends Fragment {
 
         getActivity().findViewById(R.id.fab_btn_creation_done).setVisibility(View.VISIBLE);
 
-        // Set action bar title
         ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.create_book_app_bar_title));
 
-        // TODO: Refactor + acabar part de gestió d'errors + 'unknown'/'desconengut'
         return view;
     }
 
@@ -343,7 +341,7 @@ public class AddBookFragment extends Fragment {
         if (persEvalSpinner.getSelectedItem().equals(getString(R.string.pers_eval))) {
             persEvalTILayout.setErrorEnabled(true);
             persEvalTILayout.setError(getString(R.string.msg_pers_eval));
-            ((TextView) persEvalSpinner.getSelectedView()).setError("Required field");
+            ((TextView) persEvalSpinner.getSelectedView()).setError(getString(R.string.error_msg_required));
             animateLayout(persEvalLayout);
             return false;
         }
@@ -352,8 +350,6 @@ public class AddBookFragment extends Fragment {
         persEvalLayout.setAnimation(null);
         return true;
     }
-
-    // Extras
 
     private void setErrors(TextInputLayout layout, EditText editText, int msg) {
         layout.setErrorEnabled(true);

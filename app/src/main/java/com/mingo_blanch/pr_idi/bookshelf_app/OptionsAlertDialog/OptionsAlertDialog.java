@@ -29,7 +29,7 @@ public class OptionsAlertDialog extends AlertDialog {
     }
 
     public void showBuilder() {
-        CharSequence[] options = new CharSequence[] {"Edit personal evaluation", "Delete book"};
+        CharSequence[] options = new CharSequence[] {"Edita valoració personal", "Elimina llibre"};
         BookData bookData = new BookData(context);
         bookData.open();
 

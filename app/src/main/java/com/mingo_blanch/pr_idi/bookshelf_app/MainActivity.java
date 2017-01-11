@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mingo_blanch.pr_idi.bookshelf_app.About.AboutFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.AddBook.AddBookFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.Book;
 import com.mingo_blanch.pr_idi.bookshelf_app.BookDatabase.BookData;
@@ -28,6 +29,7 @@ import com.mingo_blanch.pr_idi.bookshelf_app.BooksByAuthor.BooksByAuthorFragment
 import com.mingo_blanch.pr_idi.bookshelf_app.BooksByCategory.BooksByCategoryFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.DeleteBook.DeleteDialogFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.EditPersonalEvaluation.PersEvalDialogFragment;
+import com.mingo_blanch.pr_idi.bookshelf_app.Help.HelpFragment;
 import com.mingo_blanch.pr_idi.bookshelf_app.MainWindow.MainFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         MenuItem searchItem = menu.findItem(R.id.search);
         mSearchView = (SearchView) searchItem.getActionView();
 
-        //mSearchView.setQueryHint(getString(R.string.search_title)+"...");
+        mSearchView.setQueryHint(getString(R.string.search_title) + "...");
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -258,7 +260,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("unused")
     private void setDataBase() {
         //////////////////////////////// SET DATABASE
-        bookData.createBook("1984", "George Orwell", 1949, "Unknown", "Distopía", getString(R.string.regular));
+        bookData.createBook("1984", "George Orwell", 1949, "Desconegut", "Distopía", getString(R.string.regular));
         bookData.createBook("Cien años de soledad", "Gabriel García Márquez", 1967, "Desconegut", "Novel·la", getString(R.string.very_good));
         bookData.createBook("El Conde de Montecristo", "Alexandre Dumas", 1844, "Desconegut", "Novel·la", getString(R.string.very_bad));
         bookData.createBook("La Divina comedia", "Dante", 1300, "Desconegut", "Vers", getString(R.string.bad));
@@ -352,10 +354,8 @@ public class MainActivity extends AppCompatActivity
     public void setAddBookNavItemChecked(boolean check) {
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(R.menu.activity_main_drawer);
-        if (check) {
+        if (check)
             mNavigationView.getMenu().findItem(R.id.nav_create_book).setChecked(true);
-            mNavItemId = R.id.nav_create_book;
-        }
         else
             mNavigationView.getMenu().findItem(mNavItemId).setChecked(true);
     }

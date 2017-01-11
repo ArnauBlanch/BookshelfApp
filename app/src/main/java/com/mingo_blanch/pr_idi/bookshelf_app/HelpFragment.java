@@ -13,17 +13,17 @@ import android.widget.TextView;
  * Created by Arnau on 6/1/17.
  */
 
-public class AboutFragment extends Fragment {
+public class HelpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
 
-        ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.about));
+        ((MainActivity)getActivity()).setActionBarTitle(getString(R.string.help));
 
-        View v = inflater.inflate(R.layout.about_fragment, container, false);
-        ((TextView) v.findViewById(R.id.about_description)).setText(Html.fromHtml(getString(R.string.app_description)));
+        View v = inflater.inflate(R.layout.help_fragment, container, false);
+        ((TextView) v.findViewById(R.id.help_text)).setText(Html.fromHtml(getString(R.string.help_text)));
         return v;
     }
 

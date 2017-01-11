@@ -9,7 +9,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="12dp"
-        android:text="@string/insert_pers_eval_text"
+        android:text="@string/pers_eval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

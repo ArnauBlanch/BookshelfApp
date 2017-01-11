@@ -136,7 +136,6 @@ public class MainFragment extends Fragment implements UpdatableList, SearchableL
 
     @Override
     public void onDetach() {
-
         super.onDetach();
     }
 }

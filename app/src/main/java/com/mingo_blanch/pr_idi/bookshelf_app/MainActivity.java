@@ -221,6 +221,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_about:
                 replaceFragment(new AboutFragment());
                 break;
+            case R.id.nav_help:
+                replaceFragment(new HelpFragment());
+                break;
         }
 
         // Close the navigation drawer

@@ -8,7 +8,8 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:contentDescription="@string/app_name"
@@ -64,11 +65,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="32dp"
-            android:padding="8dp"
+            android:padding="24dp"
             android:layout_below="@id/members"
             android:textSize="14sp"
-            android:textAlignment="center"
-            android:text="@string/app_description"/>
+            android:id="@+id/about_description"
+            android:textAlignment="center"/>
     </RelativeLayout>
 </ScrollView>

@@ -1,74 +1,99 @@
 <resources>
     <string name="app_name">BookshelfApp</string>
-    <string name="books_by_author_app_bar_title">Books by author</string>
-    <string name="books_by_category_app_bar_title">Books by category</string>
-    <string name="create_book_app_bar_title">Add new book</string>
+    <string name="books_by_author_app_bar_title">Llibres per autor</string>
+    <string name="books_by_category_app_bar_title">Llibres per categoria</string>
+    <string name="create_book_app_bar_title">Afegeix nou llibre</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_books">There are no books</string>
-    <string name="snackbar_book_created">Book created succesfully</string>
-    <string name="error_msg_required">Required field</string>
-    <string name="save_caps">SAVE</string>
+    <string name="error_msg_required">Camp requerit</string>
 
-    <string name="title">Title</string>
-    <string name="author">Author</string>
-    <string name="year">Year</string>
-    <string name="publisher">Publisher</string>
-    <string name="category">Category</string>
-    <string name="pers_eval">Personal evaluation</string>
+    <string name="title">Títol</string>
+    <string name="author">Autor</string>
+    <string name="year">Any</string>
+    <string name="publisher">Editorial</string>
+    <string name="category">Categoria</string>
+    <string name="pers_eval">Valoració personal</string>
 
-    <string name="msg_title">Please, enter title</string>
-    <string name="msg_author">Please, enter author</string>
-    <string name="msg_year">Please, enter year</string>
-    <string name="msg_publisher">Please, enter publisher</string>
-    <string name="msg_category">Please, enter category</string>
-    <string name="msg_pers_eval">Please, select evaluation</string>
-    <string name="dialog_delete_confirmation">Are you sure you want to delete this book?</string>
-    <string name="delete">Delete</string>
-    <string name="cancel">Cancel</string>
+    <string name="msg_title">Sisplau, introdueix el títol</string>
+    <string name="msg_author">Sisplau, introdueix l\'autor/a</string>
+    <string name="msg_year">Sisplau, introdueix l\'any</string>
+    <string name="msg_publisher">Sisplau, introdueix l\'editorial</string>
+    <string name="msg_category">Sisplau, introdueix la categoria</string>
+    <string name="msg_pers_eval">Sisplau, valora el llibre</string>
+    <string name="dialog_delete_confirmation">Estàs segur que vols eliminar aquest llibre?</string>
+    <string name="delete">Elimina</string>
+    <string name="cancel">Cancel·la</string>
 
-    <string name="very_good">Very good</string>
-    <string name="good">Good</string>
+    <string name="very_good">Molt bo</string>
+    <string name="good">Bo</string>
     <string name="regular">Regular</string>
-    <string name="bad">Bad</string>
-    <string name="very_bad">Very bad</string>
-    <string name="select_evaluation">Select evaluation</string>
+    <string name="bad">Dolent</string>
+    <string name="very_bad">Molt dolent</string>
+    <string name="select_evaluation">Selecciona valoració</string>
 
     <string-array name="evaluations">
-        <item>Very good</item>
-        <item>Good</item>
+        <item>Molt bo</item>
+        <item>Bo</item>
         <item>Regular</item>
-        <item>Bad</item>
-        <item>Very bad</item>
-        <item>Personal evaluation</item>
+        <item>Dolent</item>
+        <item>Molt dolent</item>
+        <item>Valoració personal</item>
     </string-array>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Obre navigation drawer</string>
+    <string name="navigation_drawer_close">Tanca navigation drawer</string>
 
     <string name="search_title">Cerca títol</string>
 
-    <string name="home_title">Home</string>
+    <string name="home_title">Inici</string>
 
-    <string name="insert_pers_eval_text">Personal evaluation</string>
-    <string name="save">Save</string>
-    <string name="delete_title">Delete from database</string>
-    <string name="was_restored">was restored</string>
-    <string name="was_deleted">was deleted</string>
-    <string name="UNDO">UNDO</string>
-    <string name="was_created">was created</string>
-    <string name="changes_undone">All changes were undone</string>
-    <string name="your_pers_eval_for_book">Your personal evaluation for the book</string>
-    <string name="is">is</string>
-    <string name="about">About</string>
-    <string name="subject">Interacció i Disseny d\'Interfícies\nCurs 2016/17 Q1\nFacultat d\'Informàtica de Barcelona</string>
-    <string name="books_by_category">Books by category</string>
-    <string name="add_new_book">Add new book</string>
-    <string name="delete_book">Delete book</string>
-    <string name="home">Home</string>
-    <string name="books_by_author">Books by author</string>
-    <string name="edit_pers_eval">Edit personal evaluations</string>
-    <string name="help">Help</string>
-    <string name="app_description">BookshelfApp is an Android app designed and developed by two computer engineering students as part of the work of a subject focused on interaction and the design of interfaces.
-        \nThe app is formed by a book database, on which the user can select how to show the books and edit some parameters of them.</string>
+    <string name="save">Desa</string>
+    <string name="delete_title">Elimina llibre</string>
+    <string name="was_restored">s\'ha restaurat amb èxit</string>
+    <string name="was_deleted">s\'ha eliminat amb èxit</string>
+    <string name="UNDO">DESFER</string>
+    <string name="was_created">s\'ha creat amb èxit</string>
+    <string name="changes_undone">S\'ha restaurat la valoració personal</string>
+    <string name="your_pers_eval_for_book">La teva valoració personal pel llibre</string>
+    <string name="is">és</string>
+    <string name="about">Sobre l\'aplicació</string>
+    <string name="subject">Interacció i Disseny d\'Interfícies\nCurs 2016/17 Q1\nFacultat d\'Informàtica de Barcelona (UPC)</string>
+    <string name="books_by_category">Llibres per categoria</string>
+    <string name="add_new_book">Afegeix nou llibre</string>
+    <string name="delete_book">Elimina llibre</string>
+    <string name="home">Inici</string>
+    <string name="books_by_author">Llibres per autor</string>
+    <string name="edit_pers_eval">Edita valoració personal</string>
+    <string name="help">Ajuda</string>
+    <string name="app_description"><p><em>BookshelfApp</em> és una aplicació per Android dissenyada i desenvolupada per dos estudiants d\'enginyeria informàtica de la UPC com a part d\'un projecte de l\'assignatura Interacció i Disseny d\'Interfícies.</p>
+<p>L\'app té la finalitat de gestionar una base de dades de llibres. Permet escollir quina visualització es desitja per als llibres, editar algun dels atributs del llibre, afegir-ne de nous i eliminar-ne.</p>
+</string>
+    <string name="help_text"><![CDATA[<h3>Cerca</h3>
+<p>Fent click sobrela icona situada a la cantonada superior dreta a qualsevol pantalla devisualització de llibres, pots introduir un text per cercar llibres per títol.Cada cop que introdueixis un caràcter el llistat de llibres mostrarà elresultat de la cerca.</p>
+<h3>Afegir llibre</h3>
+<p>Per afegir unllibre has d’omplir tots els camps que et demanen amb la informació del llibreque vols afegir a la base de dades. En alguns d\’aquests camps l\’aplicació etsuggerirà diverses entrades que coincideixin amb la teva obtingudes de la basede dades. Per finalitzar hauràs de prémer el botó flotant situat a la cantonadainferior dreta. En cas que falti omplir algun camps seràs avisat.</p>
+<p>Immediatamentdesprés d’afegir un llibre podràs desfer l\’operació fent click al botó “UNDO”del missatge flotant que apareixerà a la part inferior.</p>
+<p>Pots accedir a lavista per afegir un llibre de dues maneres diferents.</p>
+<h4>Botó flotant</h4>
+<p>El botó flotantper afegir llibre es troba a la cantonada inferior dreta quan la vista actualde l\’aplicació sigui qualsevol llista de llibres. Quan accedeixes a la vistaper crear un llibre des de aquest botó i vols navegar enrere, la vista queveuràs serà aquella des d\’on has fet click al botó flotant d\’afegir.</p>
+<h4>Menú lateral desplegable</h4>
+<p>Des de .m.m.kjkljkljkljkljkl</p>
+]]></string>
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
